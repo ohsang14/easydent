@@ -1,0 +1,44 @@
+spring:
+  application:
+    name : easydent
+  datasource:
+    url : jdbc:mysql://localhost:3300/easydent
+    username : easydent
+    password: easydent
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: af5058c0258df5e867d46392ad1a04a3
+            client-secret: xvfDCqfHvHf5rOhdivwcTAkSsHoMbwT6
+            scope:
+              - account_email
+              - name
+              - birthday
+              - birthyear
+              - phone_number
+            redirect-uri: "http://localhost:9090/login/oauth2/code/kakao"
+            client-name: kakao
+            authorization-grant-type: authorization_code
+            client-authentication-method: client_secret_post
+          google:
+            client-id: 108781772937-v2e71m0ahkgefif0htsn05ba1u9aav0p.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - email
+              - profile
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+server:
+  port: 9090
+
