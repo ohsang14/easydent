@@ -1,12 +1,10 @@
 package webproject.easydent.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+@Entity
 public class Reservation {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +14,7 @@ public class Reservation {
 
     LocalDateTime reservedAt;  //예약 생성일
     LocalDateTime modifiedAt;  //예약 수정일
-    String content; //진료 내용
+    String reserveContent; //예약 내용 내용
 
 
 }

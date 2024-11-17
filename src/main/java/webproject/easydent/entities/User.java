@@ -7,12 +7,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class User {
     @Column(name = "user_id")
     @Id
@@ -31,4 +32,10 @@ public class User {
     String zip; //우편번호
 
     String address; // 주소
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    List<DigitalWallet> DigitalWalletList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    List<WantedLocation> wantedLocationList;
 }

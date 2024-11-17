@@ -1,10 +1,11 @@
 package webproject.easydent.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+@Entity
 public class Dentistry {
 
     @Column(name = "den_id")
@@ -23,4 +24,6 @@ public class Dentistry {
     String lunchTime; //점심시간
     String category; //진료항목
     String comment;
+    @OneToMany(mappedBy = "dentistry", cascade = CascadeType.REMOVE)
+    List<Category> categoryList;
 }
