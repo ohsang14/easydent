@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin-allow-popups">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            /* 전체 배경을 밝은 회색으로 설정 */
+        }
+
+        .card {
+            background-color: #ffffff;
+            /* 카드 배경을 하얀색으로 설정 */
+            border-radius: 15px;
+            /* 모서리를 둥글게 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* 부드러운 그림자 추가 */
+            width: 24rem;
+        }
+
+        .login-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 50px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            margin-bottom: 15px;
+        }
+
+        .google-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            color: #000;
+            cursor: pointer;
+        }
+
+        .google-btn img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .kakao-btn {
+            background-color: #fee500;
+            border: none;
+            color: #3a1d1d;
+        }
+
+        .kakao-btn img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Login Page Container -->
+    <div class="container vh-100 d-flex justify-content-center align-items-center">
+        <div class="card shadow p-4">
+            <div class="card-body">
+                <!-- Login Page Image -->
+                <div class="text-center mb-4">
+                    <img src="/static/img/dentist.png" alt="Login Image" style="width: 300px; height: 300px;">
+                </div>
+
+                <h3 class="card-title text-center mb-4">이지 덴트</h3>
+                <p class="text-center text-muted mb-4">로그인</p>
+
+                <!-- Google Login -->
+                <div class="login-btn google-btn" id="google-signin-btn">
+                    <img src="/static/img/web_light_rd_ctn@2x.png"
+                        alt="Google Icon">
+                    Google로 시작하기
+                </div>
+
+                <!-- Kakao Login -->
+                <a href="javascript:loginWithKakao()" class="login-btn kakao-btn">
+                    <img src="/static/img/kakao_login_medium_wide.png"
+                        alt="Kakao Icon">
+                    Kakao 계정으로 로그인
+                </a>
+
+                <p id="token-result" class="text-center text-muted mt-4"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kakao SDK -->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.3/kakao.min.js"
+        integrity="sha384-kLbo2SvoNtOFiniJ1EQ9o2iDA8i3xp+O6Cns+L5cd4RsOJfl+43z5pvieT2ayq3C"
+        crossorigin="anonymous"></script>
+    <script>
+        Kakao.init('af5058c0258df5e867d46392ad1a04a3'); // 사용하려는 앱의 JavaScript 키 입력
+
+        function loginWithKakao() {
+            Kakao.Auth.authorize({
+                redirectUri: 'http://localhost:9090/login/oauth2/code/kakao', // 실제 리다이렉트 URL로 변경
+            });
+        }
+
+        function displayToken() {
+            var token = getCookie('authorize-access-token');
+            if (token) {
+                Kakao.Auth.setAccessToken(token);
+                Kakao.Auth.getStatusInfo()
+                    .then(function (res) {
+                        if (res.status === 'connected') {
+                            document.getElementById('token-result').innerText =
+                                'Login success, token: ' + Kakao.Auth.getAccessToken();
+                        }
+                    })
+                    .catch(function (err) {
+                        Kakao.Auth.setAccessToken(null);
+                    });
+            }
+        }
+
+        function getCookie(name) {
+            var parts = document.cookie.split(name + '=');
+            if (parts.length === 2) {
+                return parts[1].split(';')[0];
+            }
+        }
+        displayToken();
+    </script>
+
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+        function handleGoogleCredentialResponse(response) {
+            const data = JSON.parse(atob(response.credential.split('.')[1]));
+            const name = data.name || 'Unknown User';
+            const email = data.email || 'Unknown Email';
+            document.getElementById('token-result').innerText =
+                `Google Login Success\nName: ${name}\nEmail: ${email}`;
+        }
+
+        // Render Google Sign-In button
+        window.onload = function () {
+            google.accounts.id.initialize({
+                client_id: '108781772937-v2e71m0ahkgefif0htsn05ba1u9aav0p.apps.googleusercontent.com', // 클라이언트 ID 입력
+                callback: handleGoogleCredentialResponse
+            });
+
+            // Render the Google button dynamically
+            google.accounts.id.renderButton(
+                document.getElementById('google-signin-btn'),
+                { theme: 'outline', size: 'large' } // Customize button style
+            );
+
+            google.accounts.id.prompt(); // Prompt user to sign in
+        };
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

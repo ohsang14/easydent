@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class User {
+public class User{
     @Column(name = "user_id")
     @Id
     String email;
@@ -32,6 +33,7 @@ public class User {
     String zip; //우편번호
 
     String address; // 주소
+
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     List<DigitalWallet> DigitalWalletList;

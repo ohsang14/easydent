@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin-allow-popups">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>홈 화면</title>
+    <style>
+        /* Reset 기본 설정 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+
+        /* 헤더 */
+        .header {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 20px;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 메인 콘텐츠 */
+        .main-content {
+            padding: 20px;
+        }
+
+        .reservation {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .reservation-btn {
+            padding: 15px 40px;
+            background: #2575fc;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .reservation-btn:hover {
+            background: #6a11cb;
+            transform: scale(1.05);
+        }
+
+        .payment,
+        .banner {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .pagination {
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        /* 하단 네비게이션 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #ffffff;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 80px;
+            background: linear-gradient(135deg, #ffffff, #f0f4f8);
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+        }
+
+        .nav-item img {
+            width: 28px;
+            height: 28px;
+            margin-bottom: 5px;
+        }
+
+        .nav-item span {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .nav-item:hover span {
+            color: white;
+        }
+
+        /* 반응형 스타일 */
+        @media screen and (max-width: 768px) {
+            .reservation-btn {
+                padding: 10px 30px;
+                font-size: 16px;
+            }
+
+            .nav-item span {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        북현로 35
+    </header>
+
+    <main class="main-content">
+        <section class="reservation">
+            <button class="reservation-btn">예약</button>
+        </section>
+
+        <section class="payment">
+            <p>결제 수단 등록</p>
+        </section>
+
+        <section class="banner">
+            <p>할인 및 이벤트 배너</p>
+            <div class="pagination">1/23</div>
+        </section>
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="/reservation.html" class="nav-item">
+            <img src="/static/img/reservation.png" alt="예약 아이콘">
+            <span>예약</span>
+        </a>
+        <a href="/consultation.html" class="nav-item">
+            <img src="/static/img/consultation.png" alt="상담 아이콘">
+            <span>상담</span>
+        </a>
+        <a href="/templates/home.html" class="nav-item">
+            <img src="/static/img/home.png" alt="홈 아이콘">
+            <span>홈</span>
+        </a>
+        <a href="/static/whitening.html" class="nav-item">
+            <img src="/img/whitening.png" alt="미백 아이콘">
+            <span>미백</span>
+        </a>
+        <a href="/static/mypage.html" class="nav-item">
+            <img src="/img/mypage.png" alt="마이페이지 아이콘">
+            <span>마이페이지</span>
+        </a>
+    </nav>
+</body>
+
+</html>

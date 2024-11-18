@@ -15,6 +15,7 @@ public class UserController {
         return "login";    // login.html로 이동
     }
 
+
 //    @GetMapping("/logout")
 //    public String logout(HttpServletRequest request, HttpServletResponse response){
 //        new SecurityContextLogoutHandler().logout(request, response,
