@@ -1,16 +1,14 @@
 package webproject.easydent.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Getter
+@Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,13 +29,9 @@ public class User{
 
     LocalDate createdAt; // 계정 생성일
 
-    String zip; //우편번호
-
     String address; // 주소
 
-    // OAuth2 관련 필드 추가
-    String provider;        // google, kakao 등 로그인 제공자
-    String providerId;      // OAuth2 제공자가 제공하는 고유 ID
+
 
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)

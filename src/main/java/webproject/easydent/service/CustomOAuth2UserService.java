@@ -25,6 +25,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
         try {
+            log.info("OAuth2User attributes: {}", oAuth2User.getAttributes());
             User user = UserFactory.create(userRequest, oAuth2User);
             log.info("Created user: {}", user);
 
@@ -37,7 +38,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             return new CustomOAuth2User(savedUser, oAuth2User.getAttributes());
         } catch (Exception e) {
             log.error("Error during OAuth2 authentication: ", e);
-            throw new OAuth2AuthenticationException(new OAuth2Error("authentication_error"), "인증 처리 중 오류가 발생했습니다.");
+            throw new OAuth2AuthenticationException(
+                    new OAuth2Error("authentication_error"),
+                    "인증 처리 중 오류가 발생했습니다."
+            );
         }
     }
 }

@@ -29,26 +29,19 @@ public class SecurityConfig {
                 .headers((headers) -> headers
                         .addHeaderWriter(new XFrameOptionsHeaderWriter(
                                 XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
-                .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS))  // STATELESS를 ALWAYS로 변경
                 .authorizeHttpRequests(auth -> {
                     auth
                             .requestMatchers("/", "/home", "/login", "/oauth2/**").permitAll()
                             .anyRequest().authenticated();
                 })
-                .oauth2Login(oauth2 -> {
-                    oauth2
-                            .userInfoEndpoint(userInfo ->
-                                    userInfo.userService(customOAuth2UserService))
-                            .defaultSuccessUrl("/home")
-                            .failureUrl("/login");
-                })
-                .logout(logout -> {
-                    logout
-                            .logoutSuccessUrl("/home")
-                            .invalidateHttpSession(true)
-                            .deleteCookies("JSESSIONID");
-                });
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/home")
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(customOAuth2UserService))
+                );
 
         return http.build();
     }
