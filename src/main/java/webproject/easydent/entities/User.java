@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
+@Table(name = "users")
 public class User{
     @Column(name = "user_id")
     @Id
@@ -33,6 +34,10 @@ public class User{
     String zip; //우편번호
 
     String address; // 주소
+
+    // OAuth2 관련 필드 추가
+    String provider;        // google, kakao 등 로그인 제공자
+    String providerId;      // OAuth2 제공자가 제공하는 고유 ID
 
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)

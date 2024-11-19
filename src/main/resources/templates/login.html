@@ -40,6 +40,8 @@
 
         .google-btn {
             display: flex;
+            width: 100%;
+            height: 50px;
             align-items: center;
             justify-content: center;
             background-color: #ffffff;
@@ -75,7 +77,7 @@
             <div class="card-body">
                 <!-- Login Page Image -->
                 <div class="text-center mb-4">
-                    <img src="/static/img/dentist.png" alt="Login Image" style="width: 300px; height: 300px;">
+                    <img src="/img/dentist.png" alt="Login Image" style="width: 300px; height: 300px;">
                 </div>
 
                 <h3 class="card-title text-center mb-4">이지 덴트</h3>
@@ -83,16 +85,15 @@
 
                 <!-- Google Login -->
                 <div class="login-btn google-btn" id="google-signin-btn">
-                    <img src="/static/img/web_light_rd_ctn@2x.png"
+                    <img src="/img/google.svg"
                         alt="Google Icon">
-                    Google로 시작하기
                 </div>
 
                 <!-- Kakao Login -->
                 <a href="javascript:loginWithKakao()" class="login-btn kakao-btn">
-                    <img src="/static/img/kakao_login_medium_wide.png"
+                    <img src="/img/kakao_login_medium_wide.png"
                         alt="Kakao Icon">
-                    Kakao 계정으로 로그인
+                    카카오 계정으로 로그인
                 </a>
 
                 <p id="token-result" class="text-center text-muted mt-4"></p>
@@ -105,11 +106,12 @@
         integrity="sha384-kLbo2SvoNtOFiniJ1EQ9o2iDA8i3xp+O6Cns+L5cd4RsOJfl+43z5pvieT2ayq3C"
         crossorigin="anonymous"></script>
     <script>
-        Kakao.init('af5058c0258df5e867d46392ad1a04a3'); // 사용하려는 앱의 JavaScript 키 입력
+        Kakao.init('3dfca59a4cb0111ab8d50fe1b6306ada'); // 사용하려는 앱의 JavaScript 키 입력
 
         function loginWithKakao() {
             Kakao.Auth.authorize({
-                redirectUri: 'http://localhost:9090/login/oauth2/code/kakao', // 실제 리다이렉트 URL로 변경
+                redirectUri: 'http://localhost:9090/home',
+                scope: 'account_email',
             });
         }
 
@@ -120,12 +122,13 @@
                 Kakao.Auth.getStatusInfo()
                     .then(function (res) {
                         if (res.status === 'connected') {
-                            document.getElementById('token-result').innerText =
-                                'Login success, token: ' + Kakao.Auth.getAccessToken();
+                            // 로그인 성공 시 리다이렉트
+                            window.location.href = 'http://localhost:9090/home';
                         }
                     })
                     .catch(function (err) {
                         Kakao.Auth.setAccessToken(null);
+                        console.error('Error:', err);
                     });
             }
         }
@@ -146,8 +149,9 @@
             const data = JSON.parse(atob(response.credential.split('.')[1]));
             const name = data.name || 'Unknown User';
             const email = data.email || 'Unknown Email';
-            document.getElementById('token-result').innerText =
-                `Google Login Success\nName: ${name}\nEmail: ${email}`;
+
+            // 로그인 성공 후 리다이렉트
+            window.location.href = 'http://localhost:9090/home';
         }
 
         // Render Google Sign-In button
