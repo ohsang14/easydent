@@ -5,9 +5,10 @@
         <thead class="table-dark">
         <tr>
             <th>번호</th>
-            <th>
+            <th style="width:50%">
                 제목
             </th>
+            <th>작성자</th>
             <th>
                 작성일시
             </th>
@@ -18,6 +19,9 @@
             <td th:text="${loop.count}"></td>
             <td>
                 <a th:href="@{|/review/detail/${review.id}|}" th:text="${review.subject}"></a>
+            </td>
+            <td>
+                <span th:if="${review.author!= null}" th:text="${review.author.name}"></span>
             </td>
             <td th:text="${#temporals.format(review.createDate, 'yyyy-MM-dd HH:mm')}"></td>
         </tr>

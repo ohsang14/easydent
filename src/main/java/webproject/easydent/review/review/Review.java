@@ -3,6 +3,7 @@ package webproject.easydent.review.review;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import webproject.easydent.entities.User;
 import webproject.easydent.review.comment.Comment;
 
 import java.time.LocalDate;
@@ -28,4 +29,7 @@ public class Review {
 
     @OneToMany(mappedBy = "review", cascade = CascadeType.REMOVE)
     private List<Comment> commentList; // 리뷰에 대한 답글 리스트
+
+    @ManyToOne
+    private User author; //글쓴이
 }

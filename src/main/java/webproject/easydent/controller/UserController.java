@@ -43,10 +43,13 @@ public class UserController {
     public String myPage(Model model, @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
         if (customOAuth2User != null) {
             User user = customOAuth2User.getUser();
+            log.info("Authenticated user: {}", user);
             addUserToModel(model, user);
         }
         return "mypage";
     }
+
+
 
     private void addUserToModel(Model model, User user) {
         model.addAttribute("userEmail", user.getEmail());
@@ -63,6 +66,7 @@ public class UserController {
 
         if(customOAuth2User!=null){
             User user = customOAuth2User.getUser();
+            log.info("Authenticated user: {}", user);
             model.addAttribute("user",user);
         }
         else{
@@ -76,10 +80,34 @@ public class UserController {
                              @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
         if (customOAuth2User != null) {
             user.setEmail(customOAuth2User.getUser().getEmail());  // 현재 로그인한 사용자의 ID 설정
+            log.info("Authenticated user: {}", user);
             userService.updateUser(user);
+
         }
+
         return "redirect:/mypage";
     }
+
+    @GetMapping("/notice")
+    public String notice(){
+        return "notice";
+    }
+
+    @GetMapping("/shop")
+    public String shop(){
+        return "shop";
+    }
+
+    @GetMapping("/medical-history")
+    public String medicalHistory(){
+        return "medical-history";
+    }
+
+    @GetMapping("/customer-center")
+    public String customerCenter(){
+        return "customer-center";
+    }
+
 
 
 //    @GetMapping("/consultation")

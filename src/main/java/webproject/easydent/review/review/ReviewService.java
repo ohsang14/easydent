@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import webproject.easydent.DataNotFoundException;
+import webproject.easydent.entities.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -34,11 +35,12 @@ public class ReviewService {
         }
     }
 
-    public void create(String subject, String content){
+    public void create(String subject, String content, User user){
         Review r = new Review();
         r.setSubject(subject);
         r.setContent(content);
         r.setCreateDate(LocalDateTime.now());
+        r.setAuthor(user);
         this.reviewRepository.save(r);
     }
 

@@ -3,6 +3,7 @@ package webproject.easydent.review.comment;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import webproject.easydent.entities.User;
 import webproject.easydent.review.review.Review;
 
 import java.time.LocalDate;
@@ -23,4 +24,7 @@ public class Comment {
     
     @ManyToOne
     private Review review; //하나의 리뷰에 여러개의 답글 가능
+
+    @ManyToOne
+    private User author;
 }

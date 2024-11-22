@@ -31,12 +31,16 @@ public class User{
 
     String address; // 주소
 
-
-
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     List<DigitalWallet> DigitalWalletList;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     List<WantedLocation> wantedLocationList;
+
+    @ManyToOne
+    @JoinColumn(name = "family_id")
+    private FamilyAccount familyAccount;
+
+    private Boolean isFamilyLeader; // 가족 리더인지 여부
+
 }

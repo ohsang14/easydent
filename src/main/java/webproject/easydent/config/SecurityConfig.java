@@ -3,6 +3,7 @@ package webproject.easydent.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -16,6 +17,7 @@ import webproject.easydent.service.CustomOAuth2UserService;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
@@ -31,6 +33,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                         .requestMatchers("/static/**", "/css/**", "/js/**", "/images/**", "/img/**").permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
+                .csrf(csrf -> csrf.disable())
                 .csrf(csrf -> csrf.ignoringRequestMatchers(new AntPathRequestMatcher
                         ("/h2-console/**")))
                 .headers((headers) -> headers

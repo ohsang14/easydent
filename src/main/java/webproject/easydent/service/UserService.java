@@ -2,8 +2,11 @@ package webproject.easydent.service;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import webproject.easydent.DataNotFoundException;
 import webproject.easydent.entities.User;
 import webproject.easydent.repositories.UserRepository;
+
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -27,5 +30,14 @@ public class UserService {
         updateUser.setAddress(user.getAddress());
 
         userRepository.save(updateUser);
+    }
+
+    public User getUser(String email){
+        Optional<User> user = this.userRepository.findById(email);
+        if(user.isPresent()){
+            return user.get();
+        }else{
+            throw new DataNotFoundException("User is not found");
+        }
     }
 }
