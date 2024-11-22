@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background: #007BFF;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .content {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .notice-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        .notice-item:last-child {
+            border-bottom: none;
+        }
+        .notice-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #007BFF;
+            cursor: pointer;
+        }
+        .notice-title:hover {
+            text-decoration: underline;
+        }
+        .notice-date {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+        .notice-detail {
+            display: none;
+            font-size: 14px;
+            color: #555;
+            margin-top: 10px;
+        }
+        .notice-detail.show {
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+<!-- 헤더 -->
+<div class="header">
+    공지사항
+</div>
+
+<!-- 콘텐츠 -->
+<!-- 샤이드가 h2에 DB 설정해서 공지사항도 만드시고 아래에 넣으시면 됩니다.-->
+<div class="content">
+    <!-- 예시로 만듬 . 공지사항 1 -->
+    <div class="notice-item">
+        <div class="notice-title" onclick="toggleDetail(1)">
+            맨유가 아모랑 파티 영입 ( 형님 이거 누르시면 자세히 공지사항 글  보이게 설정했습다 )
+        </div>
+        <div class="notice-date">2024/10/21</div>
+        <div id="detail-1" class="notice-detail">
+            안토니~ 박토니~    안토니~ 박토니~   안토니~ 박토니~   안토니~ 박토니~
+        </div>
+    </div>
+
+    <!-- 예시로 만듬 . 공지사항 2 -->
+    <div class="notice-item">
+        <div class="notice-title" onclick="toggleDetail(2)">
+            철멍토야 팀플 좀 해줘
+        </div>
+        <div class="notice-date">2024/08/13</div>
+        <div id="detail-2" class="notice-detail">
+            너 옷 잘입는다매 디자인좀 도와줘
+        </div>
+    </div>
+
+    <!-- 예시로 만듬 . 공지사항 3 -->
+    <div class="notice-item">
+        <div class="notice-title" onclick="toggleDetail(3)">
+            근데 색깔 이 파랑색이 젤 나은듯?
+        </div>
+        <div class="notice-date">2024/07/26</div>
+        <div id="detail-3" class="notice-detail">
+           인정해주십니까 조장님
+        </div>
+    </div>
+</div>
+
+
+
+<!-- JavaScript -->
+<script>
+    function toggleDetail(id) {
+        const detail = document.getElementById(`detail-${id}`);
+        detail.classList.toggle('show');
+    }
+</script>
+</body>
+</html>

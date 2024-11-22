@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가족 계정 관리</title>
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .form-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #BFECFF;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #9CE0FF;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- 가족 그룹 생성 폼 -->
+    <div class="form-group">
+        <div class="form-title">가족 그룹 생성</div>
+        <form action="/family-group/create" method="post">
+            <input type="email" name="familyEmail"
+                   placeholder="가족 대표 이메일" required>
+            <button type="submit">가족 그룹 생성</button>
+        </form>
+    </div>
+
+    <!-- 가족 구성원 추가 폼 -->
+    <div class="form-group">
+        <div class="form-title">가족 구성원 추가</div>
+        <form action="/family-group/add-member" method="post">
+            <input type="email" name="memberEmail"
+                   placeholder="구성원 이메일" required>
+            <select name="relationship" required>
+                <option value="">관계 선택</option>
+                <option value="SPOUSE">배우자</option>
+                <option value="CHILD">자녀</option>
+                <option value="PARENT">부모</option>
+                <option value="SIBLING">형제자매</option>
+                <option value="GRANDPARENT">조부모</option>
+            </select>
+            <button type="submit">구성원 추가</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

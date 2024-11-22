@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고객센터</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        .header {
+            background: #007BFF;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 22px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .content {
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .btn-large {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-align: center;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .faq-btn {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+        }
+        .faq-btn:hover {
+            background-color: #0056b3;
+        }
+        .chat-btn {
+            background-color: #fff;
+            color: #007BFF;
+            border: 1px solid #007BFF;
+        }
+        .chat-btn:hover {
+            background-color: #f0f8ff;
+        }
+        .list-group-item {
+            font-size: 16px;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fff;
+            transition: 0.3s;
+        }
+        .list-group-item:hover {
+            background-color: #f8f9fa;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .version-info {
+            font-size: 14px;
+            color: #888;
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    고객센터
+</div>
+<div class="content container">
+    <h3 class="text-center">고객님, 무엇을 도와드릴까요?</h3>
+    <p class="text-center text-muted">자주 묻는 질문에서 궁금한 점을 더 빠르게 해결해보세요!</p>
+
+    <!-- Buttons -->
+    <button class="btn btn-large faq-btn">
+        <i class="fas fa-comment-dots"></i> 자주 묻는 질문
+    </button>
+    <button class="btn btn-large chat-btn">
+        <i class="fas fa-headset"></i> 채팅 상담
+    </button>
+
+    <!-- List -->
+    <ul class="list-group mt-4">
+        <li class="list-group-item">이지던트 설명서</li>
+        <li class="list-group-item">공지사항</li>
+        <li class="list-group-item">약관 및 정책</li>
+    </ul>
+
+</div>
+
+<!-- JS Libraries -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
