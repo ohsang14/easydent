@@ -33,7 +33,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                         .requestMatchers("/static/**", "/css/**", "/js/**", "/images/**", "/img/**").permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
-                .csrf(csrf -> csrf.disable())
                 .csrf(csrf -> csrf.ignoringRequestMatchers(new AntPathRequestMatcher
                         ("/h2-console/**")))
                 .headers((headers) -> headers
@@ -46,12 +45,22 @@ public class SecurityConfig {
                             .requestMatchers("/", "/home", "/login", "/oauth2/**").permitAll()
                             .anyRequest().authenticated();
                 })
+                .logout((logout) -> logout
+                        .logoutUrl("/")
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll()
+                )
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/login")
                         .defaultSuccessUrl("/home")
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(customOAuth2UserService))
-                );
+
+                )
+
+        ;
 
         return http.build();
     }

@@ -18,12 +18,18 @@ public class FamilyAccount { // 가족 계정
 
     private String relationship;
 
-    @OneToMany(mappedBy = "familyAccount")
+    @OneToMany(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "family_id")
     private List<User> members = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "leader_id")
     private User leader;  // 가족 그룹 대표자
 
     LocalDateTime createdAt;
+
+    public void addMember(User member) {
+        this.members.add(member);
+        member.setFamilyAccount(this);
+    }
 }

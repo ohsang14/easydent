@@ -37,7 +37,8 @@ public class User{
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     List<WantedLocation> wantedLocationList;
 
-    @ManyToOne
+    // FamilyAccount 관계 수정
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "family_id")
     private FamilyAccount familyAccount;
 

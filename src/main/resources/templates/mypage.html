@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -172,11 +172,12 @@
         <div class="menu-item"><a href="/my-reviews.html">내가 작성한 리뷰 보기</a></div>
         <div class="menu-item"><a href="/whitening-results.html">미백 진단 결과</a></div>
         <div class="menu-item"><a href="/dental-inquiry.html">치과 가입 문의</a></div>
+        <div class="menu-item" sec:authorize="isAuthenticated()"><a href="/">로그아웃</a></div>
     </div>
 </main>
 
 <nav class="bottom-nav">
-    <a href="/reservation.html" class="nav-item">
+    <a href="/reservation" class="nav-item">
         <img src="/img/reservation.png" alt="예약 아이콘">
         <span>예약</span>
     </a>

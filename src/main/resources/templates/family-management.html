@@ -25,7 +25,7 @@
         }
 
         input, select {
-            width: 100%;
+            width: 50%;
             padding: 8px;
             margin-bottom: 10px;
             border: 1px solid #ddd;
@@ -45,6 +45,56 @@
         button:hover {
             background-color: #9CE0FF;
         }
+
+        /* 가족 그룹 카드 스타일 */
+        .family-groups {
+            margin-top: 30px;
+        }
+
+        .family-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .family-card-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #BFECFF;
+        }
+
+        .family-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .family-label {
+            font-weight: bold;
+            color: #666;
+            width: 80px;
+        }
+
+        .family-value {
+            color: #333;
+            flex: 1;
+            margin-left: 10px;
+        }
+
+        .no-groups {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -52,19 +102,9 @@
     <!-- 가족 그룹 생성 폼 -->
     <div class="form-group">
         <div class="form-title">가족 그룹 생성</div>
-        <form action="/family-group/create" method="post">
-            <input type="email" name="familyEmail"
-                   placeholder="가족 대표 이메일" required>
-            <button type="submit">가족 그룹 생성</button>
-        </form>
-    </div>
-
-    <!-- 가족 구성원 추가 폼 -->
-    <div class="form-group">
-        <div class="form-title">가족 구성원 추가</div>
-        <form action="/family-group/add-member" method="post">
+        <form th:action="@{/family-group/create}" method="post">
             <input type="email" name="memberEmail"
-                   placeholder="구성원 이메일" required>
+                   placeholder="초대할 구성원 이메일" required>
             <select name="relationship" required>
                 <option value="">관계 선택</option>
                 <option value="SPOUSE">배우자</option>
@@ -73,9 +113,72 @@
                 <option value="SIBLING">형제자매</option>
                 <option value="GRANDPARENT">조부모</option>
             </select>
-            <button type="submit">구성원 추가</button>
+            <br>
+            <button type="submit">가족 그룹 생성</button>
         </form>
     </div>
+
+    <!-- 가족 그룹 목록 -->
+    <div class="family-groups">
+        <style>
+            .new-group-badge {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background-color: #4CAF50;
+                color: white;
+                padding: 5px 10px;
+                border-radius: 4px;
+                font-size: 12px;
+                animation: fadeOut 3s forwards;
+            }
+
+            @keyframes fadeOut {
+                0% {
+                    opacity: 1;
+                }
+                70% {
+                    opacity: 1;
+                }
+                100% {
+                    opacity: 0;
+                }
+            }
+
+            .family-card {
+                position: relative;
+                transition: all 0.3s ease;
+            }
+
+            .family-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            }
+        </style>
+        <!-- 가족 그룹 목록 -->
+        <div class="family-groups">
+            <div class="form-title">가족 그룹 목록</div>
+
+            <!-- 가족 그룹 카드 목록 -->
+            <div class="family-card">
+                <div class="family-card-title">가족 그룹</div>
+                <div class="family-info">
+                    <span class="family-label">대표자</span>
+                    <span class="family-value" th:text="${currentUser.email}"></span>
+                </div>
+                <div class="family-info">
+                    <span class="family-label">구성원</span>
+                    <span class="family-value" th:text="${param.memberEmail}"></span>
+                </div>
+                <div class="family-info">
+                    <span class="family-label">관계</span>
+                    <span class="family-value" th:text="${param.relationship}"></span>
+                </div>
+                <div class="new-group-badge">
+                    새로운 그룹
+                </div>
+            </div>
+        </div>
 </div>
 </body>
 </html>
