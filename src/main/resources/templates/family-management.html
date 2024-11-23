@@ -98,87 +98,82 @@
     </style>
 </head>
 <body>
-<div class="container">
-    <!-- 가족 그룹 생성 폼 -->
-    <div class="form-group">
-        <div class="form-title">가족 그룹 생성</div>
-        <form th:action="@{/family-group/create}" method="post">
-            <input type="email" name="memberEmail"
-                   placeholder="초대할 구성원 이메일" required>
-            <select name="relationship" required>
-                <option value="">관계 선택</option>
-                <option value="SPOUSE">배우자</option>
-                <option value="CHILD">자녀</option>
-                <option value="PARENT">부모</option>
-                <option value="SIBLING">형제자매</option>
-                <option value="GRANDPARENT">조부모</option>
-            </select>
-            <br>
-            <button type="submit">가족 그룹 생성</button>
-        </form>
-    </div>
+    <div class="container">
+        <!-- 가족 그룹 생성 폼 -->
+        <div class="form-group">
+            <div class="form-title">가족 그룹 생성</div>
+            <form th:action="@{/family-group/create}" method="post">
+                <input type="email" name="memberEmail"
+                       placeholder="초대할 구성원 이메일" required>
+                <select name="relationship" required>
+                    <option value="">관계 선택</option>
+                    <option value="SPOUSE">배우자</option>
+                    <option value="CHILD">자녀</option>
+                    <option value="PARENT">부모</option>
+                    <option value="SIBLING">형제자매</option>
+                    <option value="GRANDPARENT">조부모</option>
+                </select>
+                <br>
+                <button type="submit">가족 그룹 생성</button>
+            </form>
+        </div>
 
-    <!-- 가족 그룹 목록 -->
-    <div class="family-groups">
-        <style>
-            .new-group-badge {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                background-color: #4CAF50;
-                color: white;
-                padding: 5px 10px;
-                border-radius: 4px;
-                font-size: 12px;
-                animation: fadeOut 3s forwards;
-            }
-
-            @keyframes fadeOut {
-                0% {
-                    opacity: 1;
-                }
-                70% {
-                    opacity: 1;
-                }
-                100% {
-                    opacity: 0;
-                }
-            }
-
-            .family-card {
-                position: relative;
-                transition: all 0.3s ease;
-            }
-
-            .family-card:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-            }
-        </style>
         <!-- 가족 그룹 목록 -->
         <div class="family-groups">
-            <div class="form-title">가족 그룹 목록</div>
+            <style>
+                .new-group-badge {
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    background-color: #4CAF50;
+                    color: white;
+                    padding: 5px 10px;
+                    border-radius: 4px;
+                    font-size: 12px;
+                    animation: fadeOut 3s forwards;
+                }
 
+                @keyframes fadeOut {
+                    0% {
+                        opacity: 1;
+                    }
+                    70% {
+                        opacity: 1;
+                    }
+                    100% {
+                        opacity: 0;
+                    }
+                }
+
+                .family-card {
+                    position: relative;
+                    transition: all 0.3s ease;
+                }
+
+                .family-card:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+                }
+            </style>
             <!-- 가족 그룹 카드 목록 -->
-            <div class="family-card">
+            <div class="family-card" th:if="${session.familyAccount != null}">
                 <div class="family-card-title">가족 그룹</div>
                 <div class="family-info">
                     <span class="family-label">대표자</span>
-                    <span class="family-value" th:text="${currentUser.email}"></span>
+                    <span class="family-value" th:text="${session.currentUser.email}"></span>
                 </div>
                 <div class="family-info">
                     <span class="family-label">구성원</span>
-                    <span class="family-value" th:text="${param.memberEmail}"></span>
+                    <span class="family-value" th:text="${session.memberEmail}"></span>
                 </div>
                 <div class="family-info">
                     <span class="family-label">관계</span>
-                    <span class="family-value" th:text="${param.relationship}"></span>
+                    <span class="family-value" th:text="${session.relationship}"></span>
                 </div>
                 <div class="new-group-badge">
                     새로운 그룹
                 </div>
             </div>
         </div>
-</div>
-</body>
-</html>
+    </body>
+    </html>

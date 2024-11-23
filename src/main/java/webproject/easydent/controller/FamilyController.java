@@ -1,5 +1,6 @@
 package webproject.easydent.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -52,19 +53,19 @@ public class FamilyController {
 //        }
 //    }
 
-    @GetMapping("/family-management")
-    public String familManagement(Model model, @AuthenticationPrincipal CustomOAuth2User user){
-        User currentUser = userRepository.findById(user.getUser().getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
-
-        // 현재 사용자와 관련된 모든 가족 계정 조회
-        List<FamilyAccount> familyAccounts = familyRepository.findAll();
-        model.addAttribute("familyAccounts", familyAccounts);
-        model.addAttribute("currentUser", currentUser);
-
-        log.info("user: {}", user);
-        return "family-management";
-    }
+//    @GetMapping("/family-management")
+//    public String familManagement(Model model, @AuthenticationPrincipal CustomOAuth2User user){
+//        User currentUser = userRepository.findById(user.getUser().getEmail())
+//                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+//
+//        // 현재 사용자와 관련된 모든 가족 계정 조회
+//        List<FamilyAccount> familyAccounts = familyRepository.findAll();
+//        model.addAttribute("familyAccounts", familyAccounts);
+//        model.addAttribute("currentUser", currentUser);
+//
+//        log.info("user: {}", user);
+//        return "family-management";
+//    }
 
 //    @PostMapping("/family-group/create")
 //    public String createFamilyGroup(
@@ -85,22 +86,34 @@ public class FamilyController {
             @AuthenticationPrincipal CustomOAuth2User user,
             @RequestParam(name = "memberEmail") String memberEmail,
             @RequestParam(name = "relationship") String relationship,
+            HttpSession session,
             Model model) {
         try {
             // 가족 그룹 생성
             FamilyAccount familyAccount = familyAccountService.createFamilyGroup(user.getUser(), memberEmail, relationship);
 
-            // 모델에 데이터 추가
-            model.addAttribute("currentUser", user.getUser());
-            model.addAttribute("memberEmail", memberEmail);
-            model.addAttribute("relationship", relationship);
-            model.addAttribute("familyAccount", familyAccount);
+            // 세션에 데이터 저장
+            session.setAttribute("currentUser", user.getUser());
+            session.setAttribute("memberEmail", memberEmail);
+            session.setAttribute("relationship", relationship);
+            session.setAttribute("familyAccount", familyAccount);
 
             return "family-management";
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());
             return "family-management";
         }
+    }
+
+    @GetMapping("/family-management")
+    public String familyManagement(Model model, HttpSession session) {
+        // 세션에서 데이터 복원
+        model.addAttribute("currentUser", session.getAttribute("currentUser"));
+        model.addAttribute("memberEmail", session.getAttribute("memberEmail"));
+        model.addAttribute("relationship", session.getAttribute("relationship"));
+        model.addAttribute("familyAccount", session.getAttribute("familyAccount"));
+
+        return "family-management";
     }
 }
 
