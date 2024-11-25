@@ -47,12 +47,18 @@ public class UserController {
 
     @GetMapping("/mypage")
     public String myPage(Model model, @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
+//        if (customOAuth2User != null) {
+//            User user = customOAuth2User.getUser();
+//            log.info("Authenticated user: {}", user);
+//            addUserToModel(model, user);
+//        }
+//        return "mypage";
         if (customOAuth2User != null) {
-            User user = customOAuth2User.getUser();
-            log.info("Authenticated user: {}", user);
-            addUserToModel(model, user);
+            String email = customOAuth2User.getUser().getEmail(); // 현재 로그인한 사용자의 이메일
+            User user = userService.findByEmail(email); // DB에서 사용자 정보 조회
+            model.addAttribute("userName", user.getName()); // 모델에 사용자 이름 추가
         }
-        return "mypage";
+        return "mypage"; // 마이페이지 템플릿 반환
     }
 
 
@@ -86,9 +92,9 @@ public class UserController {
                              @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
         if (customOAuth2User != null) {
             user.setEmail(customOAuth2User.getUser().getEmail());  // 현재 로그인한 사용자의 ID 설정
-            log.info("Authenticated user: {}", user);
             userService.updateUser(user);
 
+            log.info(user.getName());
         }
 
         return "redirect:/mypage";
