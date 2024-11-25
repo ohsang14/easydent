@@ -3,6 +3,8 @@ package webproject.easydent.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -31,8 +33,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers("/static/**", "/css/**", "/js/**", "/images/**", "/img/**").permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
+                        .requestMatchers("/static/**", "/css/**", "/js/**", "/images/**", "/img/**", "/login").permitAll()
+//                        .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
+                                .anyRequest().authenticated()
+                )
                 .csrf(csrf -> csrf.ignoringRequestMatchers(new AntPathRequestMatcher
                         ("/h2-console/**")))
                 .headers((headers) -> headers
@@ -40,13 +44,9 @@ public class SecurityConfig {
                                 XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.ALWAYS))  // STATELESS를 ALWAYS로 변경
-                .authorizeHttpRequests(auth -> {
-                    auth
-                            .requestMatchers("/", "/home", "/login", "/oauth2/**").permitAll()
-                            .anyRequest().authenticated();
-                })
+
                 .logout((logout) -> logout
-                        .logoutUrl("/")
+                        .logoutUrl("/login")
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
@@ -54,7 +54,7 @@ public class SecurityConfig {
                 )
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/login")
-                        .defaultSuccessUrl("/home")
+                        .defaultSuccessUrl("/", true)
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(customOAuth2UserService))
 
@@ -63,5 +63,11 @@ public class SecurityConfig {
         ;
 
         return http.build();
+    }
+
+    @Bean
+    AuthenticationManager authenticationManager(AuthenticationConfiguration
+                                                        authenticationConfiguration) throws Exception{
+        return authenticationConfiguration.getAuthenticationManager();
     }
 }

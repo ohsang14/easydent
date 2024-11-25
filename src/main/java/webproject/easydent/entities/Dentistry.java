@@ -25,11 +25,15 @@ public class Dentistry {
     @JsonProperty("telephone")
     String telephone;
 
+    @JsonProperty("openAtweekday")
     String openAtweekday; //주중 오픈 시간
+    @JsonProperty("closeAtweekday")
     String closeAtweekday; //주중 진료 종료
+
     String openAtweekend;  //
     String closeAtweekend;
 
+    @JsonProperty("lunchTime")
     String lunchTime; //점심시간
 
     @JsonProperty("category")

@@ -21,7 +21,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/")
+    @GetMapping("/login")
     public String login() {
         return "login";
     }
@@ -31,17 +31,18 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @GetMapping("/home")
+    @GetMapping("/")
     public String home(Model model, @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
         if (customOAuth2User != null) {
             User user = customOAuth2User.getUser();
             log.info("Authenticated user: {}", user);
             addUserToModel(model, user);
+            return "home";
         }
         else{
             log.info("User is Null");
+            return "redirect:/login";
         }
-        return "home";
     }
 
     @GetMapping("/mypage")

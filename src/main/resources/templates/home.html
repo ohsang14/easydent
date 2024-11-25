@@ -14,6 +14,17 @@
             padding: 0;
             box-sizing: border-box;
         }
+        /* a href */
+        a {
+            text-decoration: none; /* Removes underline */
+            color: inherit; /* Inherits color from the parent element */
+        }
+
+        a:visited {
+            text-decoration: none; /* Ensures no underline for visited links */
+            color: inherit; /* Keeps the same color for visited links */
+        }
+
 
         body {
             font-family: 'Arial', sans-serif;
@@ -152,7 +163,8 @@
 
 <main class="main-content">
     <section class="reservation">
-        <button class="reservation-btn">예약</button>
+
+        <button class="reservation-btn" style=""><a href="/reservation">예약</a></button>
     </section>
 
     <section class="payment">
@@ -174,7 +186,7 @@
         <img src="/img/whitening.png" alt="치위생품">
         <span>치위생품</span>
     </a>
-    <a href="/home" class="nav-item">
+    <a href="/" class="nav-item">
         <img src="/img/home.png" alt="홈 아이콘">
         <span>홈</span>
     </a>

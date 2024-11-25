@@ -162,6 +162,7 @@
     <p id="dent-address">주소: Example Address</p>
     <p id="dent-phone">전화번호: 010-1234-5678</p>
     <p id="dent-hours">진료 시간: 9 AM - 6 PM</p>
+    <p id="dent-lunch">점심시간 : </p>
     <button id="reserve-button" class="button">진료 예약</button>
 </div>
 
@@ -188,6 +189,7 @@
     const dentAddress = document.getElementById("dent-address");
     const dentPhone = document.getElementById("dent-phone");
     const dentHours = document.getElementById("dent-hours");
+    const dentLunch = document.getElementById("dent-lunch");
     const reserveButton = document.getElementById("reserve-button");
     const timeSlots = document.getElementById("time-slots");
     const confirmButton = document.getElementById("confirm-button");
@@ -195,12 +197,14 @@
 
     // 검색 기능 구현 - 하나의 이벤트 리스너만 사용
     function searchDentistry() {
-        // const keyword = document.getElementById('search').value;
+        //앞 뒤 공백 제거
         const keyword = document.getElementById('search').value.trim();
 
+        //서버로 http 요청
         fetch(`/reservation/search?keyword=${encodeURIComponent(keyword)}`)
             .then(response => response.json())
             .then(data => {
+                // reservation -> div 영역
                 const listContainer = document.getElementById('reservation-list');
                 listContainer.innerHTML = ''; // 기존 결과 초기화
 
@@ -214,6 +218,7 @@
                         <div class="item-text">${dentistry.clinicName}</div>
                         <div class="waiting-text">
                             <p>주소: ${dentistry.address}</p>
+                            <p>진료 시간 : ${dentistry.openAtweekday} - ${dentistry.closeAtweekday}</p>
                             <p>전화번호: ${dentistry.telephone}</p>
                             <p>진료항목: ${dentistry.category}</p>
                         </div>
@@ -227,6 +232,10 @@
                             dentAddress.textContent = `주소: ${dentistry.address || "주소 없음"}`;
                             dentPhone.textContent = `전화번호: ${dentistry.telephone || "전화번호 없음"}`;
                             dentHours.textContent = `진료 시간: ${dentistry.openAtweekday || "9:00"} - ${dentistry.closeAtweekday || "18:00"}`;
+                            dentLunch.textContent = `점심시간 : ${dentistry.dentLunch || "13:00"}`;
+
+                            //지도 추가
+
                         });
 
                         listContainer.appendChild(listItem);
@@ -241,25 +250,6 @@
                     '<p class="empty-message">검색 중 오류가 발생했습니다. 다시 시도해주세요.</p>';
             });
     }
-
-    fetch(`/reservation/search?keyword=${encodeURIComponent(keyword)}`)
-        .then(response => response.json())
-        .then(data => {
-            console.log('받아온 데이터:', data); // JSON 데이터 구조 확인
-            if (data && data.length > 0) {
-                data.forEach(dentistry => {
-                    console.log(dentistry); // 각 객체의 필드 확인
-                });
-            }
-        });
-
-    listItem.innerHTML = `
-  <div class="item-text">${dentistry.clinicName || "이름 없음"}</div>
-  <div class="waiting-text">
-      <p>주소: ${dentistry.address || "주소 없음"}</p>
-      <p>전화번호: ${dentistry.telephone || "전화번호 없음"}</p>
-      <p>진료항목: ${dentistry.category || "진료항목 없음"}</p>
-  </div>`;
 
     // 검색 버튼 클릭 이벤트 리스너 추가
     document.getElementById('search-button').addEventListener('click', searchDentistry);
