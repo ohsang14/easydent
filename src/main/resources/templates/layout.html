@@ -1,18 +1,47 @@
-<!doctype html>
-<html lang="ko" xmlns:layout="">
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
-    <!-- sbb CSS -->
-    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
-    <title>Hello EasyDent!</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:insert="${title}">기본 템플릿</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<!-- 기본 템플릿 안에 삽입될 내용 Start -->
-<th:block layout:fragment="content"></th:block>
-<!-- 기본 템플릿 안에 삽입될 내용 End -->
+<!-- 헤더 -->
+<header class="header">
+    <a href="javascript:history.back();" class="back-button">
+        <img src="/img/back_btn.png" alt="뒤로가기"> 뒤로가기
+    </a>
+    <h1>커뮤니티</h1>
+</header>
+
+<!-- 콘텐츠 영역 -->
+<main>
+    <div layout:fragment="content"></div>
+</main>
+
+<!-- 푸터 -->
+<nav class="bottom-nav">
+    <a href="/reservation" class="nav-item">
+        <img src="/img/reservation.png" alt="예약 아이콘">
+        <span>예약</span>
+    </a>
+    <a href="/shop" class="nav-item">
+        <img src="/img/whitening.png" alt="치위생품">
+        <span>치위생품</span>
+    </a>
+    <a href="/" class="nav-item">
+        <img src="/img/home.png" alt="홈 아이콘">
+        <span>홈</span>
+    </a>
+    <a href="/review/list" class="nav-item">
+        <img src="/img/chat.png" alt="커뮤니티">
+        <span>커뮤니티</span>
+    </a>
+    <a href="/mypage" class="nav-item">
+        <img src="/img/mypage.png" alt="마이페이지 아이콘">
+        <span>마이페이지</span>
+    </a>
+</nav>
 </body>
 </html>

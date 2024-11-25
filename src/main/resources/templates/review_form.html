@@ -1,19 +1,76 @@
-<html layout:decorate="~{layout}" xmlns:layout="">
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="~{layout}" xmlns:layout="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰 등록</title>
+    <style>
+        /* 추가적인 스타일은 레이아웃 템플릿에서 처리됩니다. */
+        .container {
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 700px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-label {
+            font-weight: bold;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: #007BFF;
+            box-shadow: 0 0 6px rgba(0, 123, 255, 0.5);
+            outline: none;
+        }
+
+        .btn-primary {
+            background-color: #3591d3;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .btn-primary:hover {
+            background-color: #2a74a8;
+        }
+    </style>
+</head>
+<body>
+<!-- 메인 콘텐츠 -->
 <div layout:fragment="content" class="container">
     <h5 class="my-3 border-bottom pb-2">리뷰 등록</h5>
     <form th:action="@{/review/create}" th:object="${reviewForm}" method="post">
+        <!-- 오류 메시지 영역 -->
         <div th:replace="~{form_errors :: formErrorsFragment}"></div>
+
+        <!-- 제목 입력 -->
         <div class="mb-3">
             <label for="subject" class="form-label">제목</label>
-<!--     제목은 유지되게 해야겠지?       -->
             <input type="text" id="subject" th:field="*{subject}" class="form-control">
-            <!-- input에서 name은 필수, label이랑 id는 동일 -->
         </div>
+
+        <!-- 내용 입력 -->
         <div class="mb-3">
             <label for="content" class="form-label">내용</label>
             <textarea th:field="*{content}" id="content" class="form-control" rows="10"></textarea>
         </div>
+
+        <!-- 저장 버튼 -->
         <input type="submit" value="저장하기" class="btn btn-primary my-2">
     </form>
 </div>
+</body>
 </html>
