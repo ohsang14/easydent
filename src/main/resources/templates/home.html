@@ -24,7 +24,7 @@
 
         /* 헤더 */
         .header {
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            background-color: #C6E7FF;
             color: white;
             text-align: center;
             padding: 20px 0;
@@ -45,7 +45,7 @@
 
         .reservation-btn {
             padding: 15px 40px;
-            background: #2575fc;
+            background-color: #3591d3;
             color: white;
             border: none;
             border-radius: 50px;
@@ -57,19 +57,25 @@
         }
 
         .reservation-btn:hover {
-            background: #6a11cb;
+            background: #2a74a8;
             transform: scale(1.05);
         }
 
         .payment,
         .banner {
-            background: white;
+            background: #ffffff;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             text-align: center;
             margin-bottom: 20px;
             font-size: 16px;
+            color: #333;
+        }
+
+        .payment p, .banner p {
+            font-weight: bold;
+            color: #3591d3;
         }
 
         .pagination {
@@ -84,13 +90,14 @@
             position: fixed;
             bottom: 0;
             width: 100%;
-            background: #ffffff;
+            background: #ffffff; /* 하얀색 배경 */
             display: flex;
             justify-content: space-around;
             padding: 15px 0;
             box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
             border-top-left-radius: 20px;
             border-top-right-radius: 20px;
+            z-index: 1000;
         }
 
         .nav-item {
@@ -100,16 +107,10 @@
             justify-content: center;
             width: 60px;
             height: 80px;
-            background: linear-gradient(135deg, #ffffff, #f0f4f8);
+            background: none; /* 배경 제거 */
             border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
             text-decoration: none;
-        }
-
-        .nav-item:hover {
-            transform: scale(1.1);
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
         }
 
         .nav-item img {
@@ -120,14 +121,14 @@
 
         .nav-item span {
             font-size: 12px;
-            color: #666;
+            color: #333; /* 기본 텍스트 색상 */
             text-align: center;
             font-weight: bold;
             margin-top: 5px;
         }
 
         .nav-item:hover span {
-            color: white;
+            color: #3591d3; /* 호버 시 텍스트 색상 변경 */
         }
 
         /* 반응형 스타일 */
@@ -151,7 +152,7 @@
 
 <main class="main-content">
     <section class="reservation">
-        <button class="reservation-btn"><a href="/reservation">예약</a> </button>
+        <button class="reservation-btn">예약</button>
     </section>
 
     <section class="payment">
@@ -170,7 +171,7 @@
         <span>예약</span>
     </a>
     <a href="/shop" class="nav-item">
-        <img src="/img/consultation.png" alt="상점 아이콘">
+        <img src="/img/whitening.png" alt="치위생품">
         <span>치위생품</span>
     </a>
     <a href="/home" class="nav-item">
@@ -178,7 +179,7 @@
         <span>홈</span>
     </a>
     <a href="/review/list" class="nav-item">
-        <img src="/img/whitening.png" alt="미백 아이콘">
+        <img src="/img/chat.png" alt="커뮤니티">
         <span>커뮤니티</span>
     </a>
     <a href="/mypage" class="nav-item">

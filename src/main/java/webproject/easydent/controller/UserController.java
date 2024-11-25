@@ -26,6 +26,11 @@ public class UserController {
         return "login";
     }
 
+    @GetMapping("/logout")
+    public String logout(){
+        return "redirect:/login";
+    }
+
     @GetMapping("/home")
     public String home(Model model, @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
         if (customOAuth2User != null) {
@@ -109,13 +114,4 @@ public class UserController {
     }
 
 
-
-//    @GetMapping("/consultation")
-//    public String consultation(){
-//        return "consultation";
-//    }
-//    @GetMapping("/reservation")
-//    public String reservation(){
-//        return "reservation";
-//    }
 }

@@ -38,7 +38,7 @@ public class CommentController {
             model.addAttribute("review", review);
             return "review_detail";
         }
-        this.commentService.create(review, commentForm.getContent(),user);
+        this.commentService.create(review, commentForm.getContent() ,user);
         return String.format("redirect:/review/detail/%s", id);
     }
 }

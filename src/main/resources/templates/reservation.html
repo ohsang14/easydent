@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>통합 페이지</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        header, footer {
+            background-color: #333;
+            color: white;
+            padding: 16px;
+            text-align: center;
+            position: relative;
+        }
+
+        header .back-button {
+            position: absolute;
+            left: 16px;
+            top: 16px;
+            background-color: orange;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            display: none;
+        }
+
+        header .back-button:hover {
+            background-color: #ff7f00;
+        }
+
+        .container {
+            padding: 16px;
+            background-color: #fff;
+            margin-bottom: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            display: none;
+        }
+
+        .container.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .input-row {
+            margin-bottom: 10px;
+        }
+
+        #search {
+            width: 50%;
+        }
+
+        .list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .item {
+            padding: 16px;
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .item:hover {
+            background-color: #eaeaea;
+        }
+
+        .item-text {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .waiting-text {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .button {
+            margin-top: 16px;
+            padding: 10px;
+            border: none;
+            background-color: orange;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #ff7f00;
+        }
+
+        .time-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .time-slot {
+            padding: 10px 16px;
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .time-slot:hover {
+            background-color: #eaeaea;
+        }
+
+        .time-slot.selected {
+            background-color: orange;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<header>
+    이지덴트
+</header>
+
+<!-- 예약 섹션 -->
+<div class="container active" id="reservation-section">
+    <div class="input-row">
+        <input type="text" id="search" placeholder="치과 이름 혹은 진료명을 입력하세요.">
+        <button id="search-button" onclick="searchDentistry()">검색</button>
+    </div>
+    <div id="reservation-list" class="list"></div>
+</div>
+
+<!-- 치과 정보 섹션 -->
+<div class="container" id="dent-info-section">
+    <h1 id="dent-name">치과 정보</h1>
+    <p id="dent-address">주소: Example Address</p>
+    <p id="dent-phone">전화번호: 010-1234-5678</p>
+    <p id="dent-hours">진료 시간: 9 AM - 6 PM</p>
+    <button id="reserve-button" class="button">진료 예약</button>
+</div>
+
+<!-- 예약 시간 선택 섹션 -->
+<div class="container" id="appointment-section">
+    <h1>예약 시간 선택</h1>
+    <div id="time-slots" class="time-grid"></div>
+    <button id="confirm-button" class="button" disabled>확인</button>
+</div>
+
+<footer>
+    © 2024 치과 예약 시스템 - 모든 권리 보유.
+</footer>
+
+<script>
+    // DOM 요소 선택
+    const reservationList = document.getElementById("reservation-list");
+    const searchInput = document.getElementById("search");
+    const searchButton = document.getElementById("search-button");
+    const dentInfoSection = document.getElementById("dent-info-section");
+    const reservationSection = document.getElementById("reservation-section");
+    const appointmentSection = document.getElementById("appointment-section");
+    const dentName = document.getElementById("dent-name");
+    const dentAddress = document.getElementById("dent-address");
+    const dentPhone = document.getElementById("dent-phone");
+    const dentHours = document.getElementById("dent-hours");
+    const reserveButton = document.getElementById("reserve-button");
+    const timeSlots = document.getElementById("time-slots");
+    const confirmButton = document.getElementById("confirm-button");
+    let selectedTime = null;
+
+    // 검색 기능 구현 - 하나의 이벤트 리스너만 사용
+    function searchDentistry() {
+        // const keyword = document.getElementById('search').value;
+        const keyword = document.getElementById('search').value.trim();
+
+        fetch(`/reservation/search?keyword=${encodeURIComponent(keyword)}`)
+            .then(response => response.json())
+            .then(data => {
+                const listContainer = document.getElementById('reservation-list');
+                listContainer.innerHTML = ''; // 기존 결과 초기화
+
+                console.log('받아온 데이터:', data); // 디버깅용
+
+                if (data && data.length > 0) {
+                    data.forEach(dentistry => {
+                        const listItem = document.createElement('div');
+                        listItem.className = 'item';
+                        listItem.innerHTML = `
+                        <div class="item-text">${dentistry.clinicName}</div>
+                        <div class="waiting-text">
+                            <p>주소: ${dentistry.address}</p>
+                            <p>전화번호: ${dentistry.telephone}</p>
+                            <p>진료항목: ${dentistry.category}</p>
+                        </div>
+                    `;
+
+                        // 클릭 이벤트 추가
+                        listItem.addEventListener('click', () => {
+                            reservationSection.classList.remove("active");
+                            dentInfoSection.classList.add("active");
+                            dentName.textContent = dentistry.clinicName || "이름 없음";
+                            dentAddress.textContent = `주소: ${dentistry.address || "주소 없음"}`;
+                            dentPhone.textContent = `전화번호: ${dentistry.telephone || "전화번호 없음"}`;
+                            dentHours.textContent = `진료 시간: ${dentistry.openAtweekday || "9:00"} - ${dentistry.closeAtweekday || "18:00"}`;
+                        });
+
+                        listContainer.appendChild(listItem);
+                    });
+                } else {
+                    listContainer.innerHTML = '<p class="empty-message">검색 결과가 없습니다.</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('reservation-list').innerHTML =
+                    '<p class="empty-message">검색 중 오류가 발생했습니다. 다시 시도해주세요.</p>';
+            });
+    }
+
+    fetch(`/reservation/search?keyword=${encodeURIComponent(keyword)}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log('받아온 데이터:', data); // JSON 데이터 구조 확인
+            if (data && data.length > 0) {
+                data.forEach(dentistry => {
+                    console.log(dentistry); // 각 객체의 필드 확인
+                });
+            }
+        });
+
+    listItem.innerHTML = `
+  <div class="item-text">${dentistry.clinicName || "이름 없음"}</div>
+  <div class="waiting-text">
+      <p>주소: ${dentistry.address || "주소 없음"}</p>
+      <p>전화번호: ${dentistry.telephone || "전화번호 없음"}</p>
+      <p>진료항목: ${dentistry.category || "진료항목 없음"}</p>
+  </div>`;
+
+    // 검색 버튼 클릭 이벤트 리스너 추가
+    document.getElementById('search-button').addEventListener('click', searchDentistry);
+
+    // 엔터 키 입력 시 검색 실행
+    document.getElementById('search').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            searchDentistry();
+        }
+    });
+
+    // 검색 결과 렌더링 함수 수정
+    function renderReservationList(data) {
+        reservationList.innerHTML = "";
+        if (!data || data.length === 0) {
+            reservationList.innerHTML = "<p class='empty-message'>검색 결과가 없습니다.</p>";
+            return;
+        }
+
+        data.forEach(item => {
+            const listItem = document.createElement("div");
+            listItem.className = "item";
+            listItem.innerHTML = `
+            <span class="item-text">${item.clinic_name}</span>
+            <span class="waiting-text">${item.address}</span>
+        `;
+
+            listItem.addEventListener("click", () => {
+                reservationSection.classList.remove("active");
+                dentInfoSection.classList.add("active");
+                dentName.textContent = item.clinic_name;
+                dentAddress.textContent = `주소: ${item.address}`;
+                dentPhone.textContent = `전화번호: ${item.telephone}`;
+                dentHours.textContent = `진료 시간: ${item.open_atweekday} - ${item.close_atweekday}`;
+            });
+
+            reservationList.appendChild(listItem);
+        });
+    }
+
+    // 예약 시간 선택 처리
+    reserveButton.addEventListener("click", () => {
+        dentInfoSection.classList.remove("active");
+        appointmentSection.classList.add("active");
+        renderTimeSlots();
+    });
+
+    // 예약 확인 처리
+    confirmButton.addEventListener("click", () => {
+        if (selectedTime) {
+            alert(`예약이 완료되었습니다: ${selectedTime}`);
+            appointmentSection.classList.remove("active");
+            reservationSection.classList.add("active");
+        }
+    });
+
+
+
+
+</script>
+</body>
+</html>

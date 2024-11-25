@@ -11,8 +11,12 @@
             font-family: 'Nunito', sans-serif;
             background-color: #f5f7fa;
             color: #333;
+            padding-bottom: 120px; /* 하단 네비게이션 간격 확보 */
         }
+
+        /* 헤더 */
         .header {
+            position: relative;
             background: #007BFF;
             color: white;
             text-align: center;
@@ -20,11 +24,33 @@
             font-size: 22px;
             font-weight: bold;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
-        .content {
-            padding: 20px;
-            margin-top: 20px;
+
+        .header .back-button {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
         }
+
+        .header .back-button img {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+
+        .header .back-button:hover {
+            color: #cce4ff;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        /* 버튼 스타일 */
         .btn-large {
             width: 100%;
             padding: 15px;
@@ -34,22 +60,27 @@
             border-radius: 8px;
             transition: 0.3s;
         }
+
         .faq-btn {
             background-color: #007BFF;
             color: white;
             border: none;
         }
+
         .faq-btn:hover {
             background-color: #0056b3;
         }
+
         .chat-btn {
             background-color: #fff;
             color: #007BFF;
             border: 1px solid #007BFF;
         }
+
         .chat-btn:hover {
             background-color: #f0f8ff;
         }
+
         .list-group-item {
             font-size: 16px;
             padding: 15px 20px;
@@ -59,27 +90,88 @@
             background: #fff;
             transition: 0.3s;
         }
+
         .list-group-item:hover {
             background-color: #f8f9fa;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
         .version-info {
             font-size: 14px;
             color: #888;
             text-align: center;
             margin-top: 30px;
         }
+
+        /* 하단 네비게이션 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #ffffff;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 80px;
+            background: linear-gradient(135deg, #ffffff, #f0f4f8);
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+        }
+
+        .nav-item img {
+            width: 28px;
+            height: 28px;
+            margin-bottom: 5px;
+        }
+
+        .nav-item span {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .nav-item:hover span {
+            color: white;
+        }
     </style>
 </head>
 <body>
+<!-- 헤더 -->
 <div class="header">
+    <a href="javascript:history.back();" class="back-button">
+        <img src="/img/back_btn.png" alt="뒤로가기">
+        뒤로가기
+    </a>
     고객센터
 </div>
+
+<!-- 콘텐츠 -->
 <div class="content container">
     <h3 class="text-center">고객님, 무엇을 도와드릴까요?</h3>
     <p class="text-center text-muted">자주 묻는 질문에서 궁금한 점을 더 빠르게 해결해보세요!</p>
 
-    <!-- Buttons -->
+    <!-- 버튼 -->
     <button class="btn btn-large faq-btn">
         <i class="fas fa-comment-dots"></i> 자주 묻는 질문
     </button>
@@ -87,14 +179,37 @@
         <i class="fas fa-headset"></i> 채팅 상담
     </button>
 
-    <!-- List -->
+    <!-- 리스트 -->
     <ul class="list-group mt-4">
         <li class="list-group-item">이지던트 설명서</li>
         <li class="list-group-item">공지사항</li>
         <li class="list-group-item">약관 및 정책</li>
     </ul>
-
 </div>
+
+<!-- 하단 네비게이션 -->
+<nav class="bottom-nav">
+    <a href="/reservation" class="nav-item">
+        <img src="/img/reservation.png" alt="예약 아이콘">
+        <span>예약</span>
+    </a>
+    <a href="/shop" class="nav-item">
+        <img src="/img/whitening.png" alt="치위생품">
+        <span>치위생품</span>
+    </a>
+    <a href="/home" class="nav-item">
+        <img src="/img/home.png" alt="홈 아이콘">
+        <span>홈</span>
+    </a>
+    <a href="/review/list" class="nav-item">
+        <img src="/img/chat.png" alt="커뮤니티">
+        <span>커뮤니티</span>
+    </a>
+    <a href="/mypage" class="nav-item">
+        <img src="/img/mypage.png" alt="마이페이지 아이콘">
+        <span>마이페이지</span>
+    </a>
+</nav>
 
 <!-- JS Libraries -->
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>

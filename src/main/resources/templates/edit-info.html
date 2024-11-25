@@ -4,41 +4,191 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원 정보 수정</title>
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+            padding-bottom: 120px; /* 하단 네비게이션 간격 확보 */
+        }
+
+        /* 헤더 */
+        .header {
+            position: relative;
+            background-color: #7BD3EA;
+            color: white;
+            text-align: center;
+            padding: 16px 0;
+            font-size: 20px;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header .back-button {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+        }
+
+        .header .back-button img {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+
+        /* 이미지 배너 */
+        .banner {
+            background-image: url('/img/banner.jpg'); /* 배경 이미지 */
+            background-size: cover;
+            background-position: center;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .banner h1 {
+            font-size: 28px;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        /* 하단 네비게이션 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #ffffff;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 80px;
+            background: linear-gradient(135deg, #ffffff, #f0f4f8);
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+        }
+
+        .nav-item img {
+            width: 28px;
+            height: 28px;
+            margin-bottom: 5px;
+        }
+
+        .nav-item span {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .nav-item:hover span {
+            color: white;
+        }
+    </style>
 </head>
 <body>
+<!-- 헤더 -->
+<header class="header">
+    <a href="javascript:history.back();" class="back-button">
+        <img src="/img/back_btn.png" alt="뒤로가기">
+        뒤로가기
+    </a>
+    회원 정보 수정
+</header>
 
+<!-- 이미지 배너 -->
+<div class="banner">
+    <h1>회원정보</h1>
+</div>
+
+<!-- 회원 정보 수정 폼 -->
 <div class="container mt-5">
     <h2>회원 정보 수정</h2>
     <form th:action="@{/update-user}" method="POST">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <div class="form-group mb-3">
             <label for="name">이름</label>
-            <input type="text" class="form-control" id="name" name="name"
-                   th:value="${userName}" required>
+            <input type="text" class="form-control" id="name" name="name" th:value="${userName}" required>
         </div>
-
         <div class="form-group mb-3">
             <label for="phoneNumber">전화번호</label>
-            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
-                   th:value="${phoneNumber}" required>
+            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" th:value="${phoneNumber}" required>
         </div>
-
         <div class="form-group mb-3">
             <label for="birthDay">생일</label>
-            <input type="date" class="form-control" id="birthDay" name="birthDay"
-                   th:value="${birthDay}" required>
+            <input type="date" class="form-control" id="birthDay" name="birthDay" th:value="${birthDay}" required>
         </div>
-
         <div class="form-group mb-3">
             <label for="address">주소</label>
-            <input type="text" class="form-control" id="address" name="address"
-                   th:value="${address}" required>
+            <input type="text" class="form-control" id="address" name="address" th:value="${address}" required>
         </div>
-
         <button type="submit" class="btn btn-primary">수정하기</button>
     </form>
 </div>
 
+<!-- 하단 네비게이션 -->
+<nav class="bottom-nav">
+    <a href="/reservation" class="nav-item">
+        <img src="/img/reservation.png" alt="예약 아이콘">
+        <span>예약</span>
+    </a>
+    <a href="/shop" class="nav-item">
+        <img src="/img/whitening.png" alt="치위생품">
+        <span>치위생품</span>
+    </a>
+    <a href="/home" class="nav-item">
+        <img src="/img/home.png" alt="홈 아이콘">
+        <span>홈</span>
+    </a>
+    <a href="/review/list" class="nav-item">
+        <img src="/img/chat.png" alt="커뮤니티">
+        <span>커뮤니티</span>
+    </a>
+    <a href="/mypage" class="nav-item">
+        <img src="/img/mypage.png" alt="마이페이지 아이콘">
+        <span>마이페이지</span>
+    </a>
+</nav>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
