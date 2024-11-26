@@ -108,15 +108,45 @@
             transition: transform 0.2s, background-color 0.2s;
         }
 
-        .btn-primary {
+
+        /* 둥근 버튼 스타일 - 오른쪽 상단 고정 */
+        .floating-btn {
+            position: fixed; /* 고정 위치 설정 */
+            top: 100px; /* 페이지 상단에서의 거리 */
+            right: 50px; /* 페이지 오른쪽에서의 거리 */
+            width: 90px; /* 버튼 너비 */
+            height: 90px; /* 버튼 높이 증가 */
             background-color: #3591d3;
             color: white;
+            border-radius: 50%; /* 둥근 버튼 유지 */
+            display: flex;
+            flex-direction: column; /* 아이콘과 텍스트 수직 정렬 */
+            justify-content: center;
+            align-items: center;
+            font-size: 14px; /* 텍스트 크기 */
+            font-weight: bold;
             text-decoration: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            z-index: 1000; /* 다른 요소보다 위에 표시 */
         }
 
-        .btn-primary:hover {
+        .floating-btn:hover {
             background-color: #2a74a8;
-            transform: scale(1.05);
+            transform: scale(1.1);
+        }
+
+        /* 버튼 내부 아이콘 */
+        .floating-btn .btn-icon {
+            width: 32px; /* 아이콘 크기 */
+            height: 32px;
+            margin-bottom: 5px; /* 텍스트와 간격 */
+        }
+
+        .floating-btn .btn-text {
+            font-size: 12px; /* 텍스트 크기 조정 */
+            text-align: center; /* 가운데 정렬 */
+            color: white; /* 텍스트 색상 */
         }
 
         .btn-secondary {
@@ -227,7 +257,12 @@
     <!-- 버튼 그룹 -->
     <div class="button-group">
         <button id="load-more" class="btn btn-secondary">더보기</button>
-        <a th:href="@{/review/create}" class="btn btn-primary">글 작성하기</a>
+
+        <a th:href="@{/review/create}" class="floating-btn">
+            <img src="/img/write.png" alt="글 작성 아이콘" class="btn-icon">
+            <span class="btn-text">글 작성</span>
+        </a>
+
     </div>
 </div>
 
