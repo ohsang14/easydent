@@ -1,5 +1,6 @@
 package webproject.easydent.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,9 +14,14 @@ import lombok.Setter;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    public Long id;
 
+    @JsonProperty("productName")
     public String productName;
 
+    @JsonProperty("price")
     public String price;
+
+    @JsonProperty("imageUrl")
+    public String imageUrl;
 }

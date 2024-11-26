@@ -27,17 +27,6 @@ public class DentistryController {
         return "reservation";
     }
 
-    //json 형태로 반환
-//    @GetMapping("/search")
-//    @ResponseBody
-//    public ResponseEntity<List<Dentistry>> searchDentistry(
-//            @RequestParam("keyword") String keyword,
-//            @RequestParam(value = "address", required = false, defaultValue = "") String address) {
-//        List<Dentistry> results = dentistryService.searchDentistry(keyword, address);
-//        System.out.println("검색 결과: " + results); // 디버깅 로그 추가
-//        return ResponseEntity.ok(results);
-//    }
-
     //responseEntity -> http 상태코드, 헤더, 본문 데이터를 모두 포함할 수 있는 객체로
     //http 상태코드200(OK)와 함께 results 객체를 json 형태로 반환
     @GetMapping("/search")

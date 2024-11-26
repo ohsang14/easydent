@@ -1,5 +1,7 @@
 package webproject.easydent.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -10,9 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import webproject.easydent.entities.Product;
 import webproject.easydent.entities.User;
+import webproject.easydent.service.ProductService;
 import webproject.easydent.service.UserService;
 import webproject.easydent.vos.CustomOAuth2User;
+
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -20,6 +26,7 @@ import webproject.easydent.vos.CustomOAuth2User;
 public class UserController {
 
     private final UserService userService;
+    private final ProductService productService;
 
     @GetMapping("/login")
     public String login() {
@@ -106,7 +113,15 @@ public class UserController {
     }
 
     @GetMapping("/shop")
-    public String shop(){
+    public String showShop(Model model, @AuthenticationPrincipal CustomOAuth2User customOAuth2User) throws JsonProcessingException {
+        List<Product> products = productService.getAllProducts();
+        if(customOAuth2User!=null){
+            User user = customOAuth2User.getUser();
+            log.info("Authenticated user: {}", user);
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        String productsJson = mapper.writeValueAsString(products);
+        model.addAttribute("products", productsJson);
         return "shop";
     }
 

@@ -199,7 +199,7 @@
 <body>
 <!-- 헤더 -->
 <header>
-    <button class="back-button" onclick="history.back()">
+    <button class="back-button" onclick="window.location.href='http://localhost:9090/reservation';">
         뒤로가기
     </button>
     치과예약
@@ -289,6 +289,7 @@
                         listItem.innerHTML = `
                             <div class="item-text">${dentistry.clinicName}</div>
                             <div class="waiting-text">주소: ${dentistry.address}</div>
+                            <div class="waiting-text">운영시간: ${dentistry.openAtweekday} - ${dentistry.closeAtweekday}</div>
                         `;
 
                         listItem.addEventListener('click', () => {
