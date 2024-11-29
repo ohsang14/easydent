@@ -26,6 +26,10 @@ public class FamilyAccount { // 가족 계정
     @JoinColumn(name = "leader_id")
     private User leader;  // 가족 그룹 대표자
 
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "member_id")
+    private User member;
+
     LocalDateTime createdAt;
 
     public void addMember(User member) {

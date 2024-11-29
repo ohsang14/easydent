@@ -34,10 +34,12 @@ public class FamilyAccountService {
 
         FamilyAccount familyAccount = new FamilyAccount();
         familyAccount.setId(generateFamilyGroupId(memberEmail, relationship));
+        familyAccount.setCreatedAt(LocalDateTime.now());
         familyAccount.setRelationship(relationship);
         familyAccount.setLeader(leader);
+        familyAccount.setMember(member);
         familyAccount.getMembers().add(member);
-        familyAccount.setCreatedAt(LocalDateTime.now());
+
 
 
         // 리더와 멤버의 familyAccount 설정

@@ -197,15 +197,28 @@
 
 <script>
     // 서버에서 전달받은 데이터를 파싱
+    // function getProductData() {
+    //     const productDataElement = document.getElementById('productData');
+    //     return JSON.parse(productDataElement.getAttribute('data-products'));
+    // }
     function getProductData() {
-        const productDataElement = document.getElementById('productData');
-        return JSON.parse(productDataElement.getAttribute('data-products'));
+        try {
+            const productDataElement = document.getElementById('productData');
+            if (!productDataElement) {
+                console.error('Product data element not found');
+                return [];
+            }
+            const data = productDataElement.getAttribute('data-products');
+            return JSON.parse(data);
+        } catch (error) {
+            console.error('Error parsing product data:', error);
+            return [];
+        }
     }
 
     function renderProducts(products) {
         const productList = document.getElementById("product-list");
         productList.innerHTML = ''; // 기존 내용 초기화
-
         products.forEach((product) => {
             const productCard = document.createElement("div");
             productCard.className = "col-12 col-md-6 col-lg-4";

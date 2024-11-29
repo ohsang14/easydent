@@ -112,16 +112,25 @@ public class UserController {
         return "notice";
     }
 
+//    @GetMapping("/shop")
+//    public String showShop(Model model, @AuthenticationPrincipal CustomOAuth2User customOAuth2User) throws JsonProcessingException {
+//        List<Product> products = productService.getAllProducts();
+//        if(customOAuth2User!=null){
+//            User user = customOAuth2User.getUser();
+//            log.info("Authenticated user: {}", user);
+//        }
+//        ObjectMapper mapper = new ObjectMapper();
+//        String productsJson = mapper.writeValueAsString(products);
+//        model.addAttribute("products", productsJson);
+//        return "shop";
+//    }
     @GetMapping("/shop")
     public String showShop(Model model, @AuthenticationPrincipal CustomOAuth2User customOAuth2User) throws JsonProcessingException {
         List<Product> products = productService.getAllProducts();
-        if(customOAuth2User!=null){
-            User user = customOAuth2User.getUser();
-            log.info("Authenticated user: {}", user);
-        }
         ObjectMapper mapper = new ObjectMapper();
         String productsJson = mapper.writeValueAsString(products);
         model.addAttribute("products", productsJson);
+        log.info(productsJson);
         return "shop";
     }
 
