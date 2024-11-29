@@ -33,12 +33,15 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers("/static/**", "/css/**", "/js/**", "/images/**", "/img/**", "/login").permitAll()
+                        .requestMatchers("/static/**", "/css/**", "/js/**", "/images/**", "/img/**", "/login","/reservation/**").permitAll()
 //                        .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
+                                .requestMatchers("/reservation/create").permitAll() // 추가
                                 .anyRequest().authenticated()
                 )
-                .csrf(csrf -> csrf.ignoringRequestMatchers(new AntPathRequestMatcher
-                        ("/h2-console/**")))
+                .csrf(csrf -> csrf.ignoringRequestMatchers(
+                        new AntPathRequestMatcher("/h2-console/**"),
+                        new AntPathRequestMatcher("/reservation/create")
+                ))
                 .headers((headers) -> headers
                         .addHeaderWriter(new XFrameOptionsHeaderWriter(
                                 XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
@@ -59,6 +62,7 @@ public class SecurityConfig {
                                 .userService(customOAuth2UserService))
 
                 )
+
 
         ;
 

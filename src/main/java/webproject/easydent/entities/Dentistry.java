@@ -2,20 +2,22 @@ package webproject.easydent.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.Data;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
+@Data
 @Entity
+@Table(name = "dentistry")
 public class Dentistry {
 
+    @Id
     @Column(name = "den_id")
     @JsonProperty("businessNum")
-    @Id
-    String businessNum; //사업자 번호
+    String businessNum; // 사업자 번호
 
     @JsonProperty("clinicName")
-    String clinicName; //치과명
+    String clinicName; // 치과명
 
     String zip; // 우편번호
 
@@ -26,17 +28,23 @@ public class Dentistry {
     String telephone;
 
     @JsonProperty("openAtweekday")
-    String openAtweekday; //주중 오픈 시간
-    @JsonProperty("closeAtweekday")
-    String closeAtweekday; //주중 진료 종료
+    String openAtweekday; // 주중 오픈 시간
 
-    String openAtweekend;  //
+    @JsonProperty("closeAtweekday")
+    String closeAtweekday; // 주중 진료 종료
+
+    String openAtweekend;
     String closeAtweekend;
 
     @JsonProperty("lunchTime")
-    String lunchTime; //점심시간
+    String lunchTime; // 점심시간
 
     @JsonProperty("category")
-    String category; //진료항목
+    String category; // 진료 항목
+
     String comment;
+
+    // 예약과의 관계 추가
+    @OneToMany(mappedBy = "dentistry", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reservation> reservations;
 }

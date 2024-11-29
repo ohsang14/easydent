@@ -1,18 +1,17 @@
 package webproject.easydent.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import webproject.easydent.entities.Dentistry;
+import webproject.easydent.entities.Reservation;
+import webproject.easydent.repositories.ReservationRepository;
 import webproject.easydent.service.DentistryService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
-import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -38,5 +37,21 @@ public class DentistryController {
         System.out.println(keyword + " 검색 결과 : "+ results);
         return ResponseEntity.ok(results);
     }
+    @Autowired
+    private ReservationRepository reservationRepository;
+
+
+
+    @CrossOrigin(origins = "http://192.168.0.49:9090") // HTML 파일을 열고 있는 브라우저의 주소와 동일하게 설정
+    @PostMapping("/create")
+    public ResponseEntity<Reservation> createReservation(
+            @RequestBody Reservation reservation) {
+        Reservation savedReservation = reservationRepository.save(reservation);
+        return new ResponseEntity<>(savedReservation, HttpStatus.CREATED);
+    }
+
+
+
+
 
 }

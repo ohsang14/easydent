@@ -231,13 +231,27 @@
         <button onclick="goToAppointment()">예약 시간 선택</button>
     </div>
 
+    <style>
+        .form-label {
+            font-weight: bold;
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+        }
+    </style>
+
     <div class="container" id="appointment-section">
+        <h1>예약자명: <input type="text"></h1>
+        <h1>병원명 : </h1>
         <h1>예약 시간 선택</h1>
         <div id="time-slots" class="time-grid"></div>
-        <button id="confirm-button" onclick="confirmReservation()" disabled>예약 확정</button>
+
+        <label for="content" class="form-label">현재 증상</label>
+        <textarea id="content" name="content" class="form-control" rows="10" placeholder="현재 증상을 간단히 입력하세요."></textarea>
+        <button id="confirm-button" onclick="confirmReservation()" style="text-align: center" disabled>예약 확정</button>
     </div>
 </div>
-
 
 <nav class="bottom-nav">
     <a href="/reservation" class="nav-item">
@@ -279,10 +293,8 @@
         const activeSection = document.querySelector('.container.active').id;
 
         if (activeSection === "reservation-section") {
-            // 첫 번째 섹션일 경우 메인 페이지로 이동
             window.location.href = "/";
         } else {
-            // 나머지 섹션에서는 history.back()으로 이전 섹션으로 이동
             window.history.back();
         }
     }
@@ -293,20 +305,17 @@
         if (section) {
             showSection(section);
         } else if (document.querySelector('.container.active').id !== "reservation-section") {
-            // 첫 번째 섹션 상태가 아닌 경우 "/"
             window.location.href = "/";
         }
     });
 
     function searchDentistry() {
-        //검색 결과를 보여줄 영역
         const reservationList = document.getElementById("reservation-list");
         const searchInput = document.getElementById("search");
         const keyword = searchInput.value.trim();
 
-        //keyword 값을 URL 인코딩해서 서버로 전송
         fetch(`/reservation/search?keyword=${encodeURIComponent(keyword)}`)
-            .then(response => response.json()) //서버에서 반환된 json 데이터를 객체로 변환
+            .then(response => response.json())
             .then(data => {
                 reservationList.innerHTML = '';
 
@@ -346,12 +355,12 @@
     }
 
     function generateTimeSlots() {
-        timeSlots.innerHTML = ""; // 기존 시간 슬롯 초기화
+        timeSlots.innerHTML = "";
         const startTime = new Date();
-        startTime.setHours(10, 0, 0, 0); // 오전 10시 시작
+        startTime.setHours(10, 0, 0, 0);
 
         const endTime = new Date();
-        endTime.setHours(18, 0, 0, 0); // 오후 6시 종료
+        endTime.setHours(18, 0, 0, 0);
 
         while (startTime < endTime) {
             const slot = document.createElement("div");
@@ -364,7 +373,7 @@
                 confirmButton.disabled = false;
             };
             timeSlots.appendChild(slot);
-            startTime.setMinutes(startTime.getMinutes() + 30); // 30분 간격
+            startTime.setMinutes(startTime.getMinutes() + 30);
         }
     }
 
@@ -374,13 +383,46 @@
         generateTimeSlots();
     }
 
-    confirmButton.addEventListener("click", () => {
+    function confirmReservation() {
         if (selectedTime) {
-            alert(`예약이 확정되었습니다: ${selectedTime}`);
-            history.pushState({ section: "reservation-section" }, null, "");
-            showSection("reservation-section");
+            const reservationData = {
+                clinicName: document.getElementById("dent-name").textContent,
+                address: document.getElementById("dent-address").textContent.replace("주소: ", ""),
+                telephone: document.getElementById("dent-phone").textContent.replace("전화번호: ", ""),
+                // reserved_at:
+                reservedTime: selectedTime,
+                // customerName: "카카오 사용자" // or a value obtained from user input
+                // dentistry_id:
+                // user_id:
+            };
+
+            fetch('http://192.168.0.49:9090/reservation/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(reservationData)
+            })
+
+                    .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Network response was not ok');
+                    }
+                })
+                .then(data => {
+                    alert('예약이 성공적으로 저장되었습니다.');
+                    history.pushState({ section: "reservation-section" }, null, "");
+                    showSection("reservation-section");
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('예약에 실패했습니다. 다시 시도해 주세요.');
+                });
         }
-    });
+    }
+
 
     // 페이지 로드 시 초기 상태 설정
     history.replaceState({ section: "reservation-section" }, null, "");
