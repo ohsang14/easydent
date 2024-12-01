@@ -161,4 +161,27 @@ function confirmReservation() {
     }
 }
 
+// 날짜 입력 필드에 최소 날짜 설정
+const today = new Date();
+const tomorrow = new Date(today);
+tomorrow.setDate(tomorrow.getDate() + 1);
+const minDate = tomorrow.toISOString().split('T')[0];
+document.getElementById("reservation-date").min = minDate;
+
+// 날짜 선택 이벤트 리스너 수정
+document.getElementById("reservation-date").addEventListener("change", (event) => {
+    const selectedDateValue = new Date(event.target.value);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (selectedDateValue < today) {
+        alert("오늘 이후 날짜만 선택 가능합니다.");
+        event.target.value = '';
+        selectedDate = null;
+    } else {
+        selectedDate = event.target.value;
+    }
+    validateReservation();
+});
+
 history.replaceState({section: "reservation-section"}, null, "");
