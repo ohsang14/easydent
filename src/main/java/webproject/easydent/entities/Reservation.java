@@ -19,8 +19,10 @@ public class Reservation {
     private String address;
     private String telephone;
     private LocalDateTime reservedAt; // 예약 생성일
+    private String reservedDate;
     private String reservedTime; // 예약을 한 시간인데 날짜도 포함되어야함
     private String customerName;
+    private String inQuery;
 
     // Dentistry와의 관계 설정 (ManyToOne)
     @ManyToOne

@@ -130,6 +130,7 @@ function confirmReservation() {
             telephone: document.getElementById("dent-phone").textContent.replace("전화번호: ", ""),
             reservedDate: selectedDate,
             reservedTime: selectedTime,
+            inQuery: document.getElementById("content").value
         };
 
         fetch('http://192.168.45.179:9090/reservation/create', {

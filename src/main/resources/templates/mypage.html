@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
     <title>마이페이지</title>
     <style>
-        /* Reset 기본 설정 */
+        /* 기본 스타일 초기화 */
         * {
             margin: 0;
             padding: 0;
@@ -16,69 +17,79 @@
         body {
             font-family: 'Arial', sans-serif;
             line-height: 1.6;
-            background-color: #fff;
+            background-color: #f9f9f9;
             color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
         }
 
-        /* 헤더 */
-        .header {
-            background-color: #7BD3EA;
+        /* 헤더 스타일 */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            max-width: 600px;
+            background-color: #5a91f7;
             color: white;
             text-align: center;
-            padding: 20px 0;
-            font-size: 20px;
+            padding: 16px;
+            font-size: 18px;
             font-weight: bold;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: relative;
+            z-index: 1000;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
         }
 
-        /* 뒤로가기 버튼 */
         .back-button {
             position: absolute;
-            left: 16px; /* 헤더 왼쪽 여백 */
-            top: 50%; /* 세로 중앙 정렬 */
+            left: 16px;
+            top: 50%;
             transform: translateY(-50%);
-            display: flex;
-            align-items: center; /* 이미지와 텍스트 세로 정렬 */
-            text-decoration: none; /* 기본 링크 스타일 제거 */
-            color: white; /* 텍스트 색상 */
-            font-size: 14px; /* 텍스트 크기 */
+            background-color: #9694FF;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
-
 
         .back-button:hover {
-            background: #1b5fcc;
-            transform: translateY(-50%) scale(1.05);
+            background-color: #9694FF;
         }
 
-        /* 뒤로가기 버튼 이미지 크기 조정 */
-        .back-button img {
-            width: 24px; /* 적절한 크기로 제한 */
-            height: 24px; /* 동일한 비율 유지 */
-            display: inline-block; /* 이미지가 인라인으로 표시되도록 설정 */
-        }
-
-
-
-        /* 메인 콘텐츠 */
+        /* 메인 콘텐츠 스타일 */
         .main-content {
+            width: 100%;
+            max-width: 600px;
+            margin: 88px auto 88px; /* 헤더와 푸터 사이에 균형 있는 공간 유지 */
             padding: 20px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
         }
 
         .user-name {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             margin-bottom: 20px;
+            text-align: center;
         }
 
         .menu-buttons {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
             margin-bottom: 20px;
         }
 
         .menu-button {
-            width: 30%;
             background: white;
             padding: 15px;
             text-align: center;
@@ -87,14 +98,14 @@
             font-size: 14px;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.2s ease-in-out;
             text-decoration: none;
             color: #333;
+            transition: all 0.2s ease-in-out;
         }
 
         .menu-button:hover {
-            background: #f5f5f5;
-            transform: translateY(-5px);
+            background: #f0f8ff;
+            transform: scale(1.05);
         }
 
         .menu-list {
@@ -109,7 +120,7 @@
             padding: 15px 0;
             border-bottom: 1px solid #e0e0e0;
             font-size: 14px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .menu-item a {
@@ -126,38 +137,7 @@
             color: #2575fc;
         }
 
-        /* 하단 네비게이션 */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background: #ffffff;
-            display: flex;
-            justify-content: space-around;
-            padding: 15px 0;
-            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
-        }
 
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 80px;
-            background: linear-gradient(135deg, #ffffff, #f0f4f8);
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-
-        .nav-item:hover {
-            transform: scale(1.1);
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
-        }
 
         .nav-item img {
             width: 28px;
@@ -168,9 +148,7 @@
         .nav-item span {
             font-size: 12px;
             color: #666;
-            text-align: center;
             font-weight: bold;
-            margin-top: 5px;
         }
 
         .nav-item:hover span {
@@ -179,19 +157,14 @@
     </style>
 </head>
 
-
 <body>
-
-<header class="header">
-    <a href="javascript:history.back();" class="back-button">
-        <img src="/img/back_btn.png">
-    </a>
+<header>
+    <button class="back-button" onclick="history.back()">뒤로가기</button>
     마이페이지
 </header>
 
 <main class="main-content">
-    <!--유저 이름-->
-    <div th:if="${userName}" class="user-name">
+    <div class="user-name" th:if="${userName}">
         <span th:text="${userName} + '님'"></span>
     </div>
     <div class="menu-buttons">
@@ -209,28 +182,8 @@
     </div>
 </main>
 
-<nav class="bottom-nav">
-    <a href="/reservation" class="nav-item">
-        <img src="/img/reservation.png" alt="예약 아이콘">
-        <span>예약</span>
-    </a>
-    <a href="/shop" class="nav-item">
-        <img src="/img/whitening.png" alt="치위생품">
-        <span>치위생품</span>
-    </a>
-    <a href="/" class="nav-item">
-        <img src="/img/home.png" alt="홈 아이콘">
-        <span>홈</span>
-    </a>
-    <a href="/review/list" class="nav-item">
-        <img src="/img/chat.png" alt="커뮤니티">
-        <span>커뮤니티</span>
-    </a>
-    <a href="/mypage" class="nav-item">
-        <img src="/img/mypage.png" alt="마이페이지 아이콘">
-        <span>마이페이지</span>
-    </a>
-</nav>
+<!--푸터 -->
+<div th:replace="footer :: footer"></div>
 </body>
 
 </html>

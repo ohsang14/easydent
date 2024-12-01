@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="ko" layout:decorate="~{layout}" xmlns:layout="" xmlns:sec="">
+<html lang="ko" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>리뷰 상세</title>
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
     <style>
         /* 기본 스타일 초기화 */
         * {
@@ -15,57 +16,76 @@
         body {
             font-family: 'Arial', sans-serif;
             line-height: 1.6;
-            background-color: #f0f4f8;
+            background-color: #f9f9f9;
             color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
         }
 
         /* 헤더 스타일 */
-        .header {
-            position: relative;
-            background-color: #007BFF;
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            max-width: 600px;
+            background-color: #5a91f7;
             color: white;
             text-align: center;
-            padding: 20px 0;
-            font-size: 20px;
+            padding: 16px;
+            font-size: 18px;
             font-weight: bold;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+
+            /* 아래쪽 모서리를 둥글게 */
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
         }
 
-        /* 뒤로가기 버튼 스타일 */
-        .header .back-button {
+
+        .back-button {
             position: absolute;
             left: 16px;
             top: 50%;
             transform: translateY(-50%);
-            display: flex;
-            align-items: center;
-            text-decoration: none;
+            background-color: #9694FF;
+            border: none;
             color: white;
-            font-size: 16px;
+            padding: 8px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        .header .back-button img {
-            width: 24px;
-            height: 24px;
-            margin-right: 8px;
+        .back-button:hover {
+            background-color: #9694FF;
         }
 
         /* 메인 콘텐츠 스타일 */
-        .container {
+        .content {
+            width: 100%;
+            max-width: 600px;
+            margin: 88px auto 88px auto;
             padding: 20px;
-            margin: 20px auto;
-            max-width: 700px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
         }
 
+        /* 리뷰 상세 상자 스타일 */
         .card {
             background-color: #ffffff;
-            border-radius: 10px;
+            border-radius: 20px; /* 둥근 모서리를 적용 */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 15px;
+            margin-bottom: 20px;
         }
+
 
         .card-body {
             padding: 10px 15px;
@@ -84,82 +104,74 @@
         }
 
         textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
             resize: none;
+            margin-top: 10px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .form-control:focus {
-            border-color: #007BFF;
-            box-shadow: 0 0 6px rgba(0, 123, 255, 0.5);
+        textarea:focus {
+            border-color: #5a91f7;
             outline: none;
+            box-shadow: 0 4px 8px rgba(90, 145, 247, 0.2);
         }
 
         .btn-primary {
-            background-color: #3591d3;
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #5a91f7;
             color: white;
+            text-align: center;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
             text-decoration: none;
-            border-radius: 5px;
+            margin-top: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .btn-primary:hover {
-            background-color: #2a74a8;
+            background-color: #5a91f7;
         }
 
-        /* 하단 네비게이션 스타일 */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: #ffffff;
-            display: flex;
-            justify-content: space-around;
-            padding: 15px 0;
-            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
-            z-index: 1000;
-        }
 
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 80px;
-            text-decoration: none;
-        }
 
         .nav-item img {
             width: 28px;
             height: 28px;
+            margin-bottom: 5px;
         }
 
         .nav-item span {
             font-size: 12px;
-            color: #333;
+            color: #666;
             font-weight: bold;
-            margin-top: 5px;
         }
 
         .nav-item:hover span {
-            color: #3591d3;
+            color: white;
         }
     </style>
 </head>
 <body>
 <!-- 헤더 -->
-<header class="header">
-    <a href="javascript:history.back();" class="back-button">
-        <img src="/img/back_btn.png" alt="뒤로가기"> 뒤로가기
-    </a>
+<header>
+    <button class="back-button" onclick="history.back()">뒤로가기</button>
     리뷰 상세
 </header>
 
 <!-- 메인 콘텐츠 -->
-<div layout:fragment="content" class="container my-3">
+<div class="content">
     <!-- 질문 -->
     <h2 class="border-bottom py-2" th:text="${review.subject}"></h2>
-    <div class="card my-3">
+    <div class="card">
         <div class="card-body">
             <div class="card-text" style="white-space: pre-line;" th:text="${review.content}"></div>
             <div class="d-flex justify-content-end">
@@ -172,7 +184,7 @@
     <!-- 답글 개수 표시 -->
     <h5 class="border-bottom my-3 py-2" th:text="|${#lists.size(review.commentList)}개의 답변이 있습니다.|"></h5>
     <!-- 답글 반복 시작 -->
-    <div class="card my-3" th:each="comment : ${review.commentList}">
+    <div class="card" th:each="comment : ${review.commentList}">
         <div class="card-body">
             <div class="card-text" style="white-space: pre-line;" th:text="${comment.content}"></div>
             <div class="d-flex justify-content-end">
@@ -189,33 +201,40 @@
     <!-- 답글 작성 -->
     <form th:action="@{|/comment/create/${review.id}|}" th:object="${commentForm}" method="post" class="my-3">
         <div th:replace="~{form_errors :: formErrorsFragment}"></div>
-        <textarea sec:authorize="isAuthenticated()" name="content" id="content2" rows="10" class="form-control"></textarea>
-        <input type="submit" value="답변 등록" class="btn btn-primary my-2">
+        <textarea sec:authorize="isAuthenticated()" name="content" id="content2" rows="5" placeholder="답글을 작성하세요..."></textarea>
+        <input type="submit" value="답변 등록" class="btn-primary">
     </form>
 </div>
 
 <!-- 하단 네비게이션 -->
-<nav class="bottom-nav">
-    <a href="/reservation" class="nav-item">
-        <img src="/img/reservation.png" alt="예약 아이콘">
-        <span>예약</span>
-    </a>
-    <a href="/shop" class="nav-item">
-        <img src="/img/whitening.png" alt="치위생품">
-        <span>치위생품</span>
-    </a>
-    <a href="/" class="nav-item">
-        <img src="/img/home.png" alt="홈 아이콘">
-        <span>홈</span>
-    </a>
-    <a href="/review/list" class="nav-item">
-        <img src="/img/chat.png" alt="커뮤니티">
-        <span>커뮤니티</span>
-    </a>
-    <a href="/mypage" class="nav-item">
-        <img src="/img/mypage.png" alt="마이페이지 아이콘">
-        <span>마이페이지</span>
-    </a>
-</nav>
+<div th:replace="footer :: footer"></div>
+<script>
+    document.querySelector('form').addEventListener('submit', function (e) {
+        e.preventDefault(); // 기본 폼 동작 방지
+
+        const form = e.target;
+        const actionUrl = form.getAttribute('action');
+        const formData = new FormData(form);
+
+        fetch(actionUrl, {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (response.ok) {
+                    // 페이지 리로드 없이 데이터 제출 후 URL을 히스토리에 기록하지 않음
+                    history.replaceState(null, '', window.location.href);
+                    location.reload(); // 페이지를 새로고침
+                } else {
+                    alert('답변 등록 중 오류가 발생했습니다.');
+                }
+            })
+            .catch(err => {
+                console.error('Error:', err);
+                alert('서버에 연결할 수 없습니다.');
+            });
+    });
+</script>
+
 </body>
 </html>
