@@ -4,293 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>커뮤니티</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        /* 기본 스타일 초기화 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            background-color: #f0f4f8;
-            color: #333;
-        }
-
-        /* 헤더 스타일 */
-        .header {
-            position: relative;
-            background-color: #007BFF;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-            font-size: 20px;
-            font-weight: bold;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .header .back-button {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: white;
-            font-size: 16px;
-        }
-
-        .header .back-button img {
-            width: 24px;
-            height: 24px;
-            margin-right: 8px;
-        }
-
-        /* 메인 콘텐츠 스타일 */
-        .container {
-            padding: 20px;
-            margin: 20px auto 60px; /* 하단 네비게이션 공간 확보 */
-            max-width: 700px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .table thead {
-            background-color: #3591d3;
-            color: white;
-        }
-
-        .table th, .table td {
-            text-align: left;
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .table tbody tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        .button-group {
-            margin-top: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn {
-            display: inline-block;
-            width: 100%;
-            max-width: 400px;
-            padding: 15px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            text-align: center;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s, background-color 0.2s;
-        }
-
-
-        /* 둥근 버튼 스타일 - 오른쪽 상단 고정 */
-        .floating-btn {
-            position: fixed; /* 고정 위치 설정 */
-            top: 100px; /* 페이지 상단에서의 거리 */
-            right: 50px; /* 페이지 오른쪽에서의 거리 */
-            width: 90px; /* 버튼 너비 */
-            height: 90px; /* 버튼 높이 증가 */
-            background-color: #3591d3;
-            color: white;
-            border-radius: 50%; /* 둥근 버튼 유지 */
-            display: flex;
-            flex-direction: column; /* 아이콘과 텍스트 수직 정렬 */
-            justify-content: center;
-            align-items: center;
-            font-size: 14px; /* 텍스트 크기 */
-            font-weight: bold;
-            text-decoration: none;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            z-index: 1000; /* 다른 요소보다 위에 표시 */
-        }
-
-        .floating-btn:hover {
-            background-color: #2a74a8;
-            transform: scale(1.1);
-        }
-
-        /* 버튼 내부 아이콘 */
-        .floating-btn .btn-icon {
-            width: 32px; /* 아이콘 크기 */
-            height: 32px;
-            margin-bottom: 5px; /* 텍스트와 간격 */
-        }
-
-        .floating-btn .btn-text {
-            font-size: 12px; /* 텍스트 크기 조정 */
-            text-align: center; /* 가운데 정렬 */
-            color: white; /* 텍스트 색상 */
-        }
-
-        .btn-secondary {
-            background-color: #f0f4f8;
-            color: #333;
-        }
-
-        .btn-secondary:hover {
-            background-color: #e0e0e0;
-            transform: scale(1.05);
-        }
-
-        /* 하단 네비게이션 스타일 */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: #ffffff;
-            display: flex;
-            justify-content: space-around;
-            padding: 15px 0;
-            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
-            z-index: 1000;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 80px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .nav-item img {
-            width: 28px;
-            height: 28px;
-        }
-
-        .nav-item span {
-            font-size: 12px;
-            color: #333;
-            font-weight: bold;
-            margin-top: 5px;
-        }
-
-        .nav-item:hover span {
-            color: #3591d3;
-        }
-
-        /* 반응형 스타일 */
-        @media screen and (max-width: 768px) {
-            .btn {
-                padding: 12px 15px;
-                font-size: 14px;
-            }
-
-            .nav-item span {
-                font-size: 10px;
-            }
-        }
-
-        /* 푸터 분리 스타일 */
-        .footer-spacer {
-            height: 60px;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" href="/css/list.css">
 </head>
 <body>
-<!-- 헤더 -->
-<header class="header">
-    <a th:href="@{/}" class="back-button">
-        <img src="/img/back_btn.png" alt="뒤로가기"> 뒤로가기
-    </a>
-    커뮤니티
-</header>
-
-
-<!-- 메인 콘텐츠 -->
-<div class="container">
-    <table class="table">
-        <thead>
-        <tr>
-            <th>번호</th>
-            <th style="width:50%">제목</th>
-            <th>작성자</th>
-            <th>작성일시</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="review, loop : ${reviewList}">
-            <td th:text="${loop.count}"></td>
-            <td>
-                <a th:href="@{|/review/detail/${review.id}|}" th:text="${review.subject}"></a>
-            </td>
-            <td>
-                <span th:if="${review.author!= null}" th:text="${review.author.name}"></span>
-            </td>
-            <td th:text="${#temporals.format(review.createDate, 'yyyy-MM-dd HH:mm')}"></td>
-        </tr>
-        </tbody>
-    </table>
-
-    <!-- 버튼 그룹 -->
-    <div class="button-group">
-        <button id="load-more" class="btn btn-secondary">더보기</button>
-
-        <a th:href="@{/review/create}" class="floating-btn">
-            <img src="/img/write.png" alt="글 작성 아이콘" class="btn-icon">
-            <span class="btn-text">글 작성</span>
+<div class="wrapper">
+    <!-- 헤더 -->
+    <header class="header">
+        <a href="/" class="back-button">
+            <img src="/img/back_btn.png" alt="뒤로가기"> 뒤로가기
         </a>
+        커뮤니티
+    </header>
 
+    <!-- 메인 콘텐츠 -->
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th style="width: 50%">제목</th>
+                <th>작성자</th>
+                <th>작성일시</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tbody>
+            <tr th:each="review, loop : ${reviewList}">
+                <td th:text="${loop.count}"></td>
+                <td>
+                    <a th:href="@{|/review/detail/${review.id}|}" th:text="${review.subject}"></a>
+                </td>
+                <td>
+                    <span th:if="${review.author!= null}" th:text="${review.author.name}"></span>
+                </td>
+                <td th:text="${#temporals.format(review.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+            </tbody>
+
+        </table>
+
+        <!-- 플로팅 버튼 -->
+        <a href="/review/create" class="floating-btn">
+            <img src="/img/write.png" alt="글쓰기">
+        </a>
     </div>
+
+    <!--푸터 -->
+    <div th:replace="footer :: footer"></div>
+
 </div>
-
-<!-- 푸터 공간 확보 -->
-<div class="footer-spacer"></div>
-
-<!-- 하단 네비게이션 -->
-<nav class="bottom-nav">
-    <a href="/reservation" class="nav-item">
-        <img src="/img/reservation.png" alt="예약 아이콘">
-        <span>예약</span>
-    </a>
-    <a href="/shop" class="nav-item">
-        <img src="/img/whitening.png" alt="치위생품">
-        <span>치위생품</span>
-    </a>
-    <a href="/" class="nav-item">
-        <img src="/img/home.png" alt="홈 아이콘">
-        <span>홈</span>
-    </a>
-    <a href="/review/list" class="nav-item">
-        <img src="/img/chat.png" alt="커뮤니티">
-        <span>커뮤니티</span>
-    </a>
-    <a href="/mypage" class="nav-item">
-        <img src="/img/mypage.png" alt="마이페이지 아이콘">
-        <span>마이페이지</span>
-    </a>
-</nav>
 </body>
 </html>

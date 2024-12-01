@@ -1,0 +1,65 @@
+    /* 홈 화면 추가 스타일 */
+
+.main-content {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-top: 72px; /* 헤더 아래 공간 */
+    margin-bottom: 100px; /* 푸터 위 공간 */
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    height: calc(100vh - 140px); /* 화면 높이 조정 */
+}
+
+    .reservation-btn {
+        display: flex; /* 버튼 내부의 플렉스 박스 설정 */
+        justify-content: center; /* 가로 방향 중앙 정렬 */
+        align-items: center; /* 세로 방향 중앙 정렬 */
+        padding: 12px 20px;
+        background-color: #5a91f7;
+        color: white;
+        border: none;
+        border-radius: 30px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s ease;
+        margin: 20px auto;
+        width: 80%; /* 버튼 너비 */
+    }
+
+    .reservation-btn:hover {
+        background-color: #4d7ee4;
+        transform: scale(1.02); /* 호버 시 크기 확대 */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+
+.payment,
+.banner {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fefefe;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    color: #333;
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+.payment p,
+.banner p {
+    font-weight: bold;
+    color: #5a91f7;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #777;
+}

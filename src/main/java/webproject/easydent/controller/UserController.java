@@ -68,6 +68,10 @@ public class UserController {
         return "mypage"; // 마이페이지 템플릿 반환
     }
 
+    @GetMapping("/register")
+    public String register(){
+        return "register";
+    }
 
 
     private void addUserToModel(Model model, User user) {

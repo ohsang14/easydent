@@ -93,6 +93,7 @@ public class FamilyController {
             FamilyAccount familyAccount = familyAccountService.createFamilyGroup(user.getUser(), memberEmail, relationship);
 
             // 세션에 데이터 저장
+            // TODO : DB에 저장하기
             session.setAttribute("currentUser", user.getUser());
             session.setAttribute("memberEmail", memberEmail);
             session.setAttribute("relationship", relationship);

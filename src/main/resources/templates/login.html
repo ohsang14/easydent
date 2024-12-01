@@ -110,7 +110,7 @@
 
     function loginWithKakao() {
         Kakao.Auth.authorize({
-            redirectUri: 'http://192.168.0.49:9090/',
+            redirectUri: 'http://192.168.45.179:9090/',
             scope: 'account_email',
         });
     }
@@ -123,7 +123,7 @@
                 .then(function (res) {
                     if (res.status === 'connected') {
                         // 로그인 성공 시 리다이렉트
-                        window.location.href = 'http://192.168.0.49:9090/';
+                        window.location.href = 'http://192.168.45.179:9090/';
                     }
                 })
                 .catch(function (err) {
@@ -151,7 +151,7 @@
         const email = data.email || 'Unknown Email';
 
         // 로그인 성공 후 리다이렉트
-        window.location.href = 'http://192.168.0.49:9090/';
+        window.location.href = 'http://192.168.45.179:9090/';
     }
 
     // Render Google Sign-In button

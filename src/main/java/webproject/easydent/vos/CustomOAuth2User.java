@@ -30,7 +30,11 @@ public class CustomOAuth2User implements OAuth2User {
         return List.of(() -> this.user.getEmail());
     }
 
-    public String getName(){
+    public String getName(){ //OAuth2User 메소드 implement -> 이메일 얻어오기
         return this.user.getEmail();
+    }
+
+    public String getUserName(){ //OAuth2User 메소드 implement -> 이름 얻어오기
+        return this.user.getName();
     }
 }

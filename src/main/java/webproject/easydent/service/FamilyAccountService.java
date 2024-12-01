@@ -38,9 +38,6 @@ public class FamilyAccountService {
         familyAccount.setRelationship(relationship);
         familyAccount.setLeader(leader);
         familyAccount.setMember(member);
-        familyAccount.getMembers().add(member);
-
-
 
         // 리더와 멤버의 familyAccount 설정
         leader.setFamilyAccount(familyAccount);
@@ -61,6 +58,4 @@ public class FamilyAccountService {
         String emailPrefix = email.split("@")[0];
         return emailPrefix + "_" + relationship;
     }
-
-
-}
+ }

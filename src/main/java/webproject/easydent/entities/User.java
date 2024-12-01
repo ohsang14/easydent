@@ -31,11 +31,6 @@ public class User{
 
     String address; // 주소
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    List<DigitalWallet> DigitalWalletList;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    List<WantedLocation> wantedLocationList;
 
     // FamilyAccount 관계 수정
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

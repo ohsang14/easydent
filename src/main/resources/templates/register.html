@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>이지덴트 - 치과를 빠르고 간편하게</title>
+<!--  <link rel="stylesheet" th:href="@{/css/footer.css}">-->
+<!--  <link rel="stylesheet" th:href="@{/css/home.css}">-->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+    }
+    header {
+      background-color: #5a91f7;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .main-content {
+      text-align: center;
+      padding-bottom: 50px;
+    }
+    form {
+      display: inline-block;
+      text-align: left;
+      width: 400px;
+    }
+    input, textarea, button {
+      width: 400px;
+      padding: 10px;
+      box-sizing: border-box;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin: 0;
+    }
+    textarea {
+      height: 100px;
+      resize: vertical;
+    }
+    button {
+      background-color: rgb(255, 237, 73);
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+
+    }
+    h5 {
+      margin: 5px 0;
+    }
+    .form-group {
+      margin-bottom: 40px;
+    }
+  </style>
+</head>
+
+<body>
+<header></header>
+<main class="main-content">
+  <form action="" class="flex flex-col">
+    <div class="form-group">
+      <label class="relative flex flex-col">
+        <h5>이름</h5>
+        <input id="name" name="name" type="text" placeholder="신청하는 분의 성함을 입력해주세요." />
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label class="relative flex flex-col">
+        <h5>치과명</h5>
+        <input id="dentistryName" name="dentistryName" type="text" placeholder="치과명을 입력해주세요." />
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label class="relative flex flex-col">
+        <h5>주소</h5>
+        <input id="address" name="address" type="text" placeholder="병원의 주소를 입력해주세요." />
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label class="relative flex flex-col">
+        <h5>연락처</h5>
+        <input id="telephone" name="telephone" type="text" placeholder="연락받으실 분의 연락처를 입력해주세요." />
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label class="relative flex flex-col">
+        <h5 class="text">추가 문의</h5>
+        <textarea id="inQuery" name="inQuery" placeholder="더 하고 싶으신 말씀이 있다면 작성해주세요."></textarea>
+      </label>
+    </div>
+    <button type="submit">확인</button>
+  </form>
+</main>
+<!--푸터 -->
+<!--<div th:replace="footer :: footer"></div>-->
+</body>
+</html>

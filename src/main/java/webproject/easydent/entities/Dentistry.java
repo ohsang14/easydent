@@ -24,6 +24,7 @@ public class Dentistry {
     @JsonProperty("address")
     String address;
 
+    @Column(nullable = false)
     @JsonProperty("telephone")
     String telephone;
 
@@ -40,9 +41,14 @@ public class Dentistry {
     String lunchTime; // 점심시간
 
     @JsonProperty("category")
+    @Column(nullable = false)
     String category; // 진료 항목
 
     String comment;
+
+    @JsonProperty("doctors")
+    @Column(nullable = false)
+    Integer doctors;
 
     // 예약과의 관계 추가
     @OneToMany(mappedBy = "dentistry", cascade = CascadeType.ALL, orphanRemoval = true)

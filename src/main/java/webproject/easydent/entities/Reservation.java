@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -16,7 +18,7 @@ public class Reservation {
     private String clinicName;
     private String address;
     private String telephone;
-    private String reservedAt; // 예약 생성일
+    private LocalDateTime reservedAt; // 예약 생성일
     private String reservedTime; // 예약을 한 시간인데 날짜도 포함되어야함
     private String customerName;
 

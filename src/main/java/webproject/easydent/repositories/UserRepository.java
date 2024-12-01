@@ -15,4 +15,6 @@ public interface UserRepository extends JpaRepository<User, String> {
     User findByAccountType(String accountType);
 
     List<User> findByEmailAndIsFamilyLeaderAndFamilyAccount(String email, Boolean isLeader, FamilyAccount familyAccount);
+
+    List<User> findByFamilyAccount(FamilyAccount familyAccount); //family account 찾기
 }
