@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="ko">
 
 <head>
@@ -8,6 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/footer.css}">
     <link rel="stylesheet" th:href="@{/css/reservation.css}">
     <link rel="stylesheet" th:href="@{/css/home.css}">
+
 </head>
 
 <body>
@@ -26,15 +26,57 @@
         <p>결제 수단 등록</p>
     </section>
 
+    <!-- Banner Section -->
     <section class="banner">
         <p>할인 및 이벤트 배너</p>
         <div class="pagination">1/23</div>
     </section>
+
+    <!-- Popular Posts Section -->
+    <section class="popular-posts">
+        <h2>요즘 뜨는 인기글 보기</h2>
+        <ul>
+
+        </ul>
+        <button class="view-all-btn" onclick="window.location.href='/review/list';">
+            글 전체보기
+        </button>
+
+    </section>
+
+    <section class="information-cards">
+        <div class="card" style="background-color: #FF6B6B;" onclick="window.location.href='http://192.168.45.179:9090/qa/page';">
+            <div class="card-content">
+                <div class="text-content">
+                    <h3>무엇이든 물어보세요</h3>
+                    <p>자주 묻는 질문들</p>
+                </div>
+                <img src="/img/qa1.png" alt="사진1" class="card-image">
+            </div>
+        </div>
+        <div class="card" style="background-color: #4ECDC4;">
+            <div class="card-content">
+                <div class="text-content">
+                    <h3>아이가 열 날 때 5가지 대처법 총정리</h3>
+                    <p>약사쌤이 알려드려요</p>
+                </div>
+                <img src="/img/qa2.png" alt="사진2" class="card-image">
+            </div>
+        </div>
+
+        <div class="card" style="background-color: #FFA801;">
+            <div class="card-content">
+                <div class="text-content">
+                    <h3>여행 상비약 4종류는 꼭 챙기셔야 해요</h3>
+                    <p>약사쌤은 이렇게 준비해요</p>
+                </div>
+                <img src="/img/qa3.png" alt="사진3" class="card-image">
+            </div>
+        </div>
+    </section>
+
 </main>
-
-<!--푸터 -->
 <div th:replace="footer :: footer"></div>
-
 </body>
 
 </html>

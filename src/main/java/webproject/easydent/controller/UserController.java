@@ -52,27 +52,21 @@ public class UserController {
         }
     }
 
-    @GetMapping("/mypage")
-    public String myPage(Model model, @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
-//        if (customOAuth2User != null) {
-//            User user = customOAuth2User.getUser();
-//            log.info("Authenticated user: {}", user);
-//            addUserToModel(model, user);
-//        }
-//        return "mypage";
-        if (customOAuth2User != null) {
-            String email = customOAuth2User.getUser().getEmail(); // 현재 로그인한 사용자의 이메일
-            User user = userService.findByEmail(email); // DB에서 사용자 정보 조회
-            model.addAttribute("userName", user.getName()); // 모델에 사용자 이름 추가
-        }
-        return "mypage"; // 마이페이지 템플릿 반환
-    }
 
-    @GetMapping("/register")
-    public String register(){
-        return "register";
-    }
 
+    @GetMapping("/shop")
+    public String showShop(Model model, @AuthenticationPrincipal CustomOAuth2User customOAuth2User) throws JsonProcessingException {
+        List<Product> products = productService.getAllProducts();
+        ObjectMapper mapper = new ObjectMapper();
+        String productsJson = mapper.writeValueAsString(products);
+        model.addAttribute("products", productsJson);
+        log.info(productsJson);
+        return "shop";
+    }
+    @GetMapping("/qa/page")
+    public String qaPage() {
+        return "qa_page";
+    }
 
     private void addUserToModel(Model model, User user) {
         model.addAttribute("userEmail", user.getEmail());
@@ -83,70 +77,4 @@ public class UserController {
         model.addAttribute("createdAt", user.getCreatedAt());
         model.addAttribute("address", user.getAddress());
     }
-
-    @GetMapping("/edit-info")
-    public String userInfo(Model model, @AuthenticationPrincipal CustomOAuth2User customOAuth2User){
-
-        if(customOAuth2User!=null){
-            User user = customOAuth2User.getUser();
-            log.info("Authenticated user: {}", user);
-            model.addAttribute("user",user);
-        }
-        else{
-            log.info("user-notFound");
-        }
-        return "edit-info";
-    }
-
-    @PostMapping("/update-user")
-    public String updateUser(@ModelAttribute User user,
-                             @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
-        if (customOAuth2User != null) {
-            user.setEmail(customOAuth2User.getUser().getEmail());  // 현재 로그인한 사용자의 ID 설정
-            userService.updateUser(user);
-
-            log.info(user.getName());
-        }
-
-        return "redirect:/mypage";
-    }
-
-    @GetMapping("/notice")
-    public String notice(){
-        return "notice";
-    }
-
-//    @GetMapping("/shop")
-//    public String showShop(Model model, @AuthenticationPrincipal CustomOAuth2User customOAuth2User) throws JsonProcessingException {
-//        List<Product> products = productService.getAllProducts();
-//        if(customOAuth2User!=null){
-//            User user = customOAuth2User.getUser();
-//            log.info("Authenticated user: {}", user);
-//        }
-//        ObjectMapper mapper = new ObjectMapper();
-//        String productsJson = mapper.writeValueAsString(products);
-//        model.addAttribute("products", productsJson);
-//        return "shop";
-//    }
-    @GetMapping("/shop")
-    public String showShop(Model model, @AuthenticationPrincipal CustomOAuth2User customOAuth2User) throws JsonProcessingException {
-        List<Product> products = productService.getAllProducts();
-        ObjectMapper mapper = new ObjectMapper();
-        String productsJson = mapper.writeValueAsString(products);
-        model.addAttribute("products", productsJson);
-        log.info(productsJson);
-        return "shop";
-    }
-
-    @GetMapping("/medical-history")
-    public String medicalHistory(){
-        return "medical-history";
-    }
-
-    @GetMapping("/customer-center")
-    public String customerCenter(){
-        return "customer-center";
-    }
-
-
 }

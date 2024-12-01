@@ -32,10 +32,6 @@ public class DentistryController {
 
     public final DentistryService dentistryService;
 
-    //    @GetMapping
-//    public String reservation(){
-//        return "reservation";
-//    }
     @GetMapping
     public String reservation(Model model, @AuthenticationPrincipal CustomOAuth2User oAuth2User) {
         if (oAuth2User != null) {

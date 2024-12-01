@@ -20,13 +20,17 @@ public class FamilyAccountService {
 
     @Transactional
     public FamilyAccount createFamilyGroup(User leader, String memberEmail, String relationship) {
-        System.out.println("createFamilyGroup : " + leader.getEmail()+ " " +  memberEmail + " " +  relationship);
+
         User member = userRepository.findByEmail(memberEmail)
-                .orElseThrow(() -> new IllegalArgumentException("초대할 구성원을 찾을 수 없습니다."));
+                .orElseThrow(() -> {
+                    System.out.println("이메일을 찾을 수 없음: " + memberEmail);
+                    return new IllegalArgumentException("초대할 구성원을 찾을 수 없습니다.");
+                });
 
         if (leader.getEmail().equals(memberEmail)) {
             throw new IllegalArgumentException("자신을 가족 구성원으로 초대할 수 없습니다.");
         }
+        System.out.println("createFamilyGroup : " + leader.getEmail()+ " " +  memberEmail + " " +  relationship);
 
         // 영속성 컨텍스트에서 leader 다시 조회
         User managedLeader = userRepository.findById(leader.getEmail())
